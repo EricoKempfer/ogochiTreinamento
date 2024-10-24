@@ -45,3 +45,21 @@ CREATE TABLE materiais_compra_fornecedores
     idcompra_fornecedores INT,
     FOREIGN KEY (idcompra_fornecedores) REFERENCES compra_fornecedores(id) -- Correção no nome da coluna
 )
+
+SELECT
+    c.nome AS cliente,
+    v.data AS data_venda,
+    v.valor AS valor_total,
+    v.quantidade AS quantidade_vendida,
+    m.tipo AS material
+FROM clientes as c
+
+JOIN vendas v ON c.id = v.idclientes
+JOIN vendas_materiais vm ON v.id = vm.idvendas
+JOIN materiais m ON vm.idmateriais = m.id
+
+WHERE
+    c.nome = 'Cliente 1'  -- Altere para o nome do cliente desejado
+    AND v.data BETWEEN '2024-10-01' AND '2024-10-30'  -- Altere para o período desejado
+ORDER BY
+    v.data;
