@@ -1,0 +1,47 @@
+CREATE TABLE materiais
+(
+    id SERIAL PRIMARY KEY,
+    idmateriais_compra_fornecedores INT,
+    FOREIGN KEY (idmateriais_compra_fornecedores) REFERENCES materiais_compra_fornecedores(id) -- Relacionamento correto
+);
+
+CREATE TABLE clientes
+(
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE vendas
+(
+    id SERIAL PRIMARY KEY,
+    idclientes INT,
+    valor FLOAT NOT NULL,
+    quantidade INT NOT NULL,
+    tipo VARCHAR(100) NOT NULL,
+    FOREIGN KEY (idclientes) REFERENCES clientes(id) -- Correção no nome da coluna
+);
+
+CREATE TABLE compra_fornecedores
+(
+    id SERIAL PRIMARY KEY
+);
+
+CREATE TABLE fornecedores
+(
+    id SERIAL PRIMARY KEY
+);
+
+CREATE TABLE vendas_materiais
+(
+    idvendas INT,
+    idmateriais INT,
+    FOREIGN KEY (idvendas) REFERENCES vendas(id),  -- Correção no nome da coluna
+    FOREIGN KEY (idmateriais) REFERENCES materiais(id) -- Correção no nome da coluna
+);
+
+CREATE TABLE materiais_compra_fornecedores
+(
+    id SERIAL PRIMARY KEY,
+    idcompra_fornecedores INT,
+    FOREIGN KEY (idcompra_fornecedores) REFERENCES compra_fornecedores(id) -- Correção no nome da coluna
+)
