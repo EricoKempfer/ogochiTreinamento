@@ -3,7 +3,7 @@ import IdiomaModel from '../models/IdiomaModel.js';
 const get = async (req, res) => {
     try {
         const id = req.params.id ? req.params.id.toString().replace(/\D/g, '') : null;
-
+        
         if (!id) {
             const response = await IdiomaModel.findAll({
                 order: [['idIdioma', 'asc']],

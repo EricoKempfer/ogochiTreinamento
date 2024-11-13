@@ -4,18 +4,30 @@ var lines = input.split('\n');
 const pegarValores = (a) => a.split(' ');
 var teste = input.split(' ');
 
-let a = lines.shift()
-let v = []
-let q = []
-let div = a/2
-a = 2
-
-for (let i = 0; i < div; i++) {
-    v[i] = a
-    q[i] = a*a
-    console.log(`${v[i]}^2 = ${q[i]}`);
-    a = a + 2
+v = []
+let par = 0
+let impar = 0
+let pos = 0
+let neg = 0
+for (let i = 0; i < 5; i++) {
+    v[i]= parseInt(lines.shift())
+    if(v[i]%2==0){
+        par = par + 1
+    } else {
+        impar = impar + 1
+       }
+    if(v[i]>0){
+        pos = pos + 1
+    } 
+    if(v[i]<0){
+        neg = neg + 1
+    }
 }
+console.log(`${par} valor(es) par(es)`);
+console.log(`${impar} valor(es) impar(es)`);
+console.log(`${pos} valor(es) positivo(s)`);
+console.log(`${neg} valor(es) negativo(s)`);
+
 
 
 
