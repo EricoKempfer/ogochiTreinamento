@@ -1,11 +1,11 @@
 import FornecedorModel from '../models/FornecedorModel.js';
-import  jwt  from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import * as bcrypt from "bcrypt";
 
 const get = async (req, res) => {
     try {
         const id = req.params.id ? req.params.id.toString().replace(/\D/g, '') : null;
-        
+
         if (!id) {
             const response = await FornecedorModel.findAll({
                 order: [['id', 'asc']],
@@ -106,7 +106,7 @@ const destroy = async (req, res) => {
 
         const response = await FornecedorModel.findOne({ where: { id: id } });
         console.log(response);
-        
+
         if (!response) {
             return res.status(400).send({
                 message: `Nenhum registro com id ${id} para deletar`,
@@ -126,8 +126,45 @@ const destroy = async (req, res) => {
         });
     }
 };
+const login = async (req, res) => {
+    try {
+        let { nome, senha } = req.body
+
+        let usuario = await FornecedorModel.findOne({
+            where: { nome },
+        })
+        if (!usuario) {
+            return res.status(200).send({
+                type: "error",
+                message: "Usuario ou senha incorretos",
+            })
+        }
+
+        if (await bcrypt.compare(senha, usuario.hashPassword)) {
+            return res.status(200).send({
+                type: "success",
+                message: "Login realizado com sucesso",
+                data: usuario,
+            });
+        } else {
+            return res.status(200).send({
+                type: "error",
+                message: "Usuario ou senha incorretos",
+            })
+        }
+
+    } catch (error) {
+        return res.status(200).send({
+            type: "error",
+            message: "erro",
+            data: error.message
+        })
+    }
+}
+
 export default {
     get,
     persist,
     destroy,
+    login,
 };

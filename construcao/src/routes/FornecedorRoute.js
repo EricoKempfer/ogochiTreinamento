@@ -7,4 +7,5 @@ export default (app) => {
   app.delete('/fornecedor/:id', controller.destroy);
   app.get('/fornecedor', controller.get);
   app.get('/fornecedor/:id', controller.get);
+  app.post('/fornecedor/login', controller.login);
 };
