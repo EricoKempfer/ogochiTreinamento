@@ -12,6 +12,13 @@ const FornecedorModel = sequelize.define(
         },
         nome: {
             type: DataTypes.TEXT,
+        },
+        cpf: {
+            type: DataTypes.TEXT,
+        },
+        hashPassword: {
+            type: DataTypes.TEXT,
+            field: 'hash_password'
         }
     },
     {

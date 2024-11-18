@@ -1,4 +1,6 @@
 import FornecedorModel from '../models/FornecedorModel.js';
+import  jwt  from "jsonwebtoken";
+import * as bcrypt from "bcrypt";
 
 const get = async (req, res) => {
     try {
@@ -35,12 +37,19 @@ const get = async (req, res) => {
 };
 
 const create = async (dados, res) => {
+
     const {
         nome,
+        cpf,
+        senha,
     } = dados;
+
+    let hashPassword = await bcrypt.hash(senha, 10);
 
     const response = await FornecedorModel.create({
         nome,
+        cpf,
+        hashPassword
     });
 
     return res.status(200).send({
