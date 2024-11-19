@@ -19,6 +19,9 @@ const FornecedorModel = sequelize.define(
         hashPassword: {
             type: DataTypes.TEXT,
             field: 'hash_password'
+        },
+        cargo: {
+            type: DataTypes.TEXT,
         }
     },
     {

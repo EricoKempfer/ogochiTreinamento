@@ -42,6 +42,7 @@ const create = async (dados, res) => {
         nome,
         cpf,
         senha,
+        cargo,
     } = dados;
 
     let hashPassword = await bcrypt.hash(senha, 10);
@@ -49,7 +50,8 @@ const create = async (dados, res) => {
     const response = await FornecedorModel.create({
         nome,
         cpf,
-        hashPassword
+        hashPassword,
+        cargo,
     });
 
     return res.status(200).send({
@@ -141,11 +143,15 @@ const login = async (req, res) => {
         }
 
         if (await bcrypt.compare(senha, usuario.hashPassword)) {
+
+            const token = jwt.sign({ nome: usuario.nome,  id: usuario.id, cargo: usuario.cargo }, process.env.TOKEN_KEY, { expiresIn: '5h' });
+
             return res.status(200).send({
                 type: "success",
                 message: "Login realizado com sucesso",
-                data: usuario,
+                token,
             });
+
         } else {
             return res.status(200).send({
                 type: "error",
@@ -161,6 +167,8 @@ const login = async (req, res) => {
         })
     }
 }
+
+
 
 export default {
     get,
