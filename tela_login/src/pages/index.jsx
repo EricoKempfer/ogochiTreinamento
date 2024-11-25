@@ -1,22 +1,26 @@
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
-import { Flex, Heading, HStack, Image, Input, Stack,  } from "@chakra-ui/react";
+import { Button, Flex, Heading, HStack, Image, Input, Link, Stack, Box,  } from "@chakra-ui/react";
 import React from "react";
+import { Checkbox } from "@/components/ui/checkbox"
 
 export default function Home() {
   return (
     <HStack
     w="100%"
     h="100vh"
+    bgColor={"black"}
     >
       <Flex
-      w="full"
+      w="200%"
       h="full"
       >
-        <Image
+        <Box 
+        bgRepeat={"no-repeat"}
+        bgPos={"center"}
+        bgImage="url(https://images6.alphacoders.com/491/491674.jpg)" 
         w="full"
         h="full"
-        objectFit="cover"
-        src="https://www.cnnbrasil.com.br/wp-content/uploads/sites/12/2023/03/230327115255-embargoed-01-pepsi-new-logo-2023.webp "
+        bgSize="cover"
         />
       </Flex>
       <Flex
@@ -28,23 +32,32 @@ export default function Home() {
         <Stack
         w="full"
         maxW="md"
-        spacing={4}
         p={6}
         >
           <Heading
           fontSize={"2xl"}
-          color="#000ddd"
+          color="#004B93"
           >
           Acesse sua conta  
           </Heading>
-          <FormControl id="usuario">
+          <FormControl id="usuario" color={"white"}>
             <FormLabel>Usuário</FormLabel>
             <Input placeholder="Seu usuário"/>
           </FormControl>
-          <FormControl>
+          <FormControl id="senha" color={"white"}>
             <FormLabel>Senha</FormLabel>
             <Input type="password"placeholder="Sua senha"/>
           </FormControl>
+          <Stack
+          direction={"row"}
+          align="start"
+          justify={"space-between"}
+          spacing={4}
+          >
+            <Checkbox colorPalette="blue" size="md" color={"white"}>Lembrar-me</Checkbox>
+            <Link color="#004B93" fontWeight={700} fontSize={14}>Esqueci minha senha</Link>
+          </Stack>
+          <Button bgColor="#004B93">Entrar</Button>
         </Stack>
       </Flex>
     </HStack>
