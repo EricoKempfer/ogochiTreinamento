@@ -7,14 +7,15 @@ import { FaGoogle } from "react-icons/fa6";
 import { Separator } from "@chakra-ui/react"
 import { SiApple } from "react-icons/si";
 import { Icon } from "@chakra-ui/react"
-
+import Fimpagina  from "../comps/Fimpagina"
 
 export default function Home() {
   const [visible, setVisible] = useState(false)
   return (
+    <div>
     <HStack
       w="100%"
-      h="100vh"
+      h="97vh"
       bgColor={"gray.800"}
     >
       <Flex
@@ -49,6 +50,7 @@ export default function Home() {
             maxW={"250px"}
             w={"auto"}
             h={"auto"}
+            
           />
           <Heading
             fontSize={"2xl"}
@@ -57,7 +59,7 @@ export default function Home() {
           >
           Acesse sua conta
           </Heading>
-          <Text pb={5} color="whiteAlpha.500" fontSize={14}>Digite suas credenciais</Text>
+          <Text pb={1} color="whiteAlpha.500" fontSize={14}>Digite suas credenciais</Text>
           <FormControl pb={10} id="usuario" color={"white"}>
             <FormLabel pb={5}>Usuário</FormLabel>
             <Input borderColor="transparent" bgColor={"black"} placeholder="Seu usuário" _placeholder={{ color: "whiteAlpha.700" }} _focus={{ borderColor: "#004B93" }} />
@@ -121,12 +123,17 @@ export default function Home() {
             </Icon>
             <Text>Entrar com a Apple</Text>
           </Button>
-          <HStack pt={2} alignSelf={"center"}>
-          <Text color={"whiteAlpha.500"}>Não tem uma conta?</Text>
-          <Link variant="underline" color={"blue.500"}>Cadastre-se</Link>
-          </HStack>
+          <Flex pt={2} alignItems="center" justifyContent="center">
+            <HStack>
+              <Text color={"whiteAlpha.500"}>Não tem uma conta?</Text>
+              <Link variant="underline" color={"blue.500"}>Cadastre-se</Link>
+            </HStack>
+          </Flex>
         </Stack>
       </Flex>
+      
     </HStack>
+    <Fimpagina />
+    </div>
   );
 }
