@@ -9,9 +9,13 @@ import { SiApple } from "react-icons/si";
 import { Icon } from "@chakra-ui/react"
 import { FaFacebook } from "react-icons/fa";
 import { sendDataToAPI } from '../utils/axios';
+import { createListCollection } from "@chakra-ui/react"
+
 
 const cadastro = () => {
+
 	const [visible, setVisible] = useState(false);
+	
 	const [usuario, setUsuario] = useState('');
 	const [cpf, setCpf] = useState('');
 	const [cargo, setCargo] = useState('');
@@ -79,39 +83,39 @@ const cadastro = () => {
 						<Text pb={3} color="whiteAlpha.500" fontSize={14}>Digite suas credenciais</Text>
 						<FormControl pb={10} id="usuario" color={"white"}>
 							<FormLabel pb={5}>Usuário</FormLabel>
-								<Input
-									borderColor="transparent"
-									bgColor={"black"}
-									placeholder="Seu usuário"
-									_placeholder={{ color: "whiteAlpha.700" }}
-									_focus={{ borderColor: "#004B93" }}
-									value={usuario}
-									onChange={(e) => setUsuario(e.target.value)}
-								/>
+							<Input
+								borderColor="transparent"
+								bgColor={"black"}
+								placeholder="Seu usuário"
+								_placeholder={{ color: "whiteAlpha.700" }}
+								_focus={{ borderColor: "#004B93" }}
+								value={usuario}
+								onChange={(e) => setUsuario(e.target.value)}
+							/>
 						</FormControl >
 						<FormControl pb={10} id="cpf" color={"white"}>
 							<FormLabel pb={5}>Cpf</FormLabel>
-								<Input
-									borderColor="transparent"
-									bgColor={"black"}
-									placeholder="Seu cpf"
-									_placeholder={{ color: "whiteAlpha.700" }}
-									_focus={{ borderColor: "#004B93" }}
-									value={cpf}
-									onChange={(e) => setCpf(e.target.value)}
-								/>
+							<Input
+								borderColor="transparent"
+								bgColor={"black"}
+								placeholder="Seu cpf"
+								_placeholder={{ color: "whiteAlpha.700" }}
+								_focus={{ borderColor: "#004B93" }}
+								value={cpf}
+								onChange={(e) => setCpf(e.target.value)}
+							/>
 						</FormControl >
 						<FormControl pb={10} id="cargo" color={"white"}>
 							<FormLabel pb={5}>Cargo</FormLabel>
-								<Input
-									borderColor="transparent"
-									bgColor={"black"}
-									placeholder="Seu cargo"
-									_placeholder={{ color: "whiteAlpha.700" }}
-									_focus={{ borderColor: "#004B93" }}
-									value={cargo}
-									onChange={(e) => setCargo(e.target.value)}
-								/>
+							<Input
+								borderColor="transparent"
+								bgColor={"black"}
+								placeholder="Seu cargo"
+								_placeholder={{ color: "whiteAlpha.700" }}
+								_focus={{ borderColor: "#004B93" }}
+								value={cargo}
+								onChange={(e) => setCargo(e.target.value)}
+							/>
 						</FormControl >
 						<FormControl pb={5} id="senha" color={"white"}>
 							<FormLabel pb={5}>Senha</FormLabel>
