@@ -4,7 +4,7 @@ import React from "react";
 const fimpagina = () => {
     return (
         <div className="fimpagina">
-            <HStack opacity={0.5}>
+            <HStack opacity={0.5} h="3vh" >
             <Text>©2024</Text>
             <Text> Pepsi </Text>
             <Flex alignItems="center" justifyContent="center" width="100%">
