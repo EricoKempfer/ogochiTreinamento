@@ -1,9 +1,19 @@
 import 'dotenv/config'
 import Express from 'express'
 import routes from './routes';
+import cors from 'cors';
 
 const app = Express();
 
+const corsOptions = {
+  origin: function (origin, callback) {
+    callback(null, true)
+  },
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
+  credentials: true
+};
+
+app.use(cors(corsOptions));
 app.use(Express.json());
 
 routes(app);

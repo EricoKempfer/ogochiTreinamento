@@ -2,17 +2,32 @@ import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Button, Flex, Heading, HStack, Image, Input, Link, Stack, Box, Text } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox"
-import { PasswordInput, PasswordStrengthMeter, } from "@/components/ui/password-input"
+import { PasswordInput } from "@/components/ui/password-input"
 import { FaF, FaGoogle } from "react-icons/fa6";
 import { Separator } from "@chakra-ui/react"
 import { SiApple } from "react-icons/si";
 import { Icon } from "@chakra-ui/react"
-import Fimpagina  from "../comps/Fimpagina"
 import { FaFacebook } from "react-icons/fa";
-
+import { sendDataToAPI } from '../utils/axios';
 
 const cadastro = () => {
-	const [visible, setVisible] = useState(false)
+	const [visible, setVisible] = useState(false);
+	const [usuario, setUsuario] = useState('');
+	const [cpf, setCpf] = useState('');
+	const [cargo, setCargo] = useState('');
+	const [senha, setSenha] = useState('');
+
+	const handleCadastro = async () => {
+		try {
+			const payload = { usuario, cpf, senha, cargo };
+			console.log('Sending payload:', payload); // Add this line
+			const response = await sendDataToAPI('/fornecedor', payload);
+			console.log('Cadastro realizado com sucesso:', response);
+		} catch (error) {
+			console.error('Erro ao realizar cadastro:', error);
+		}
+	};
+
 	return (
 		<div>
 			<HStack
@@ -64,11 +79,39 @@ const cadastro = () => {
 						<Text pb={3} color="whiteAlpha.500" fontSize={14}>Digite suas credenciais</Text>
 						<FormControl pb={10} id="usuario" color={"white"}>
 							<FormLabel pb={5}>Usuário</FormLabel>
-							<Input borderColor="transparent" bgColor={"black"} placeholder="Seu usuário" _placeholder={{ color: "whiteAlpha.700" }} _focus={{ borderColor: "#004B93" }} />
+								<Input
+									borderColor="transparent"
+									bgColor={"black"}
+									placeholder="Seu usuário"
+									_placeholder={{ color: "whiteAlpha.700" }}
+									_focus={{ borderColor: "#004B93" }}
+									value={usuario}
+									onChange={(e) => setUsuario(e.target.value)}
+								/>
 						</FormControl >
 						<FormControl pb={10} id="cpf" color={"white"}>
 							<FormLabel pb={5}>Cpf</FormLabel>
-							<Input borderColor="transparent" bgColor={"black"} placeholder="Seu cpf" _placeholder={{ color: "whiteAlpha.700" }} _focus={{ borderColor: "#004B93" }} />
+								<Input
+									borderColor="transparent"
+									bgColor={"black"}
+									placeholder="Seu cpf"
+									_placeholder={{ color: "whiteAlpha.700" }}
+									_focus={{ borderColor: "#004B93" }}
+									value={cpf}
+									onChange={(e) => setCpf(e.target.value)}
+								/>
+						</FormControl >
+						<FormControl pb={10} id="cargo" color={"white"}>
+							<FormLabel pb={5}>Cargo</FormLabel>
+								<Input
+									borderColor="transparent"
+									bgColor={"black"}
+									placeholder="Seu cargo"
+									_placeholder={{ color: "whiteAlpha.700" }}
+									_focus={{ borderColor: "#004B93" }}
+									value={cargo}
+									onChange={(e) => setCargo(e.target.value)}
+								/>
 						</FormControl >
 						<FormControl pb={5} id="senha" color={"white"}>
 							<FormLabel pb={5}>Senha</FormLabel>
@@ -80,6 +123,8 @@ const cadastro = () => {
 								_focus={{ borderColor: "#004B93" }}
 								visible={visible}
 								onVisibleChange={setVisible}
+								value={senha}
+								onChange={(e) => setSenha(e.target.value)}
 							/>
 							<Text color="whiteAlpha.500" fontSize={13} pl={0.4} pb={0}>Password is {visible ? "visible" : "hidden"}</Text>
 						</FormControl>
@@ -93,7 +138,7 @@ const cadastro = () => {
 						>
 							<Checkbox colorPalette="blue" size="md" color={"white"}>Lembrar-me</Checkbox>
 						</Stack>
-						<Button borderRadius={20} bgColor="#004B93">Cadastre-se</Button>
+						<Button borderRadius={20} bgColor="#004B93" onClick={handleCadastro}>Cadastre-se</Button>
 						<HStack pb={2} pt={2}>
 							<Separator borderColor='whiteAlpha.700' />
 							<Text flexShrink="0" color="whiteAlpha.700">OU</Text>

@@ -3,11 +3,11 @@ import React from "react";
 
 const fimpagina = () => {
     return (
-        <div className="fimpagina">
-            <HStack opacity={0.5} h="3vh" >
-            <Text>©2024</Text>
-            <Text> Pepsi </Text>
-            <Flex alignItems="center" justifyContent="center" width="100%">
+        <footer>
+            <HStack >
+            <Flex >
+            <Text >©2024 Pepsi</Text>
+            <Text mx={2}>|</Text>
             <Link href="https://www.pepsico.com.br/politica-de-privacidade" isExternal>Política de Privacidade</Link>
             <Text mx={2}>|</Text>
             <Link href="https://www.pepsico.com.br/termos-de-uso" isExternal>Termos de Uso</Link>
@@ -27,7 +27,7 @@ const fimpagina = () => {
             <Link href="https://www.pepsico.com.br/acessibilidade" isExternal>Acessibilidade</Link>
             </Flex>
             </HStack>
-        </div>
+        </footer>
     );
 }
 

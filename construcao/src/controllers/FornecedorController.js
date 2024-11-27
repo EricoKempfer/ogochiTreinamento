@@ -36,47 +36,63 @@ const get = async (req, res) => {
     }
 };
 
-const create = async (dados, res) => {
+const create = async (req, res) => {
+    const { usuario, cpf, senha, cargo } = req.body;
 
-    const {
-        nome,
-        cpf,
-        senha,
-        cargo,
-    } = dados;
+    try {
+        let hashPassword = await bcrypt.hash(senha, 10);
 
-    let hashPassword = await bcrypt.hash(senha, 10);
+        console.log('Creating user with data:', { usuario, cpf, hashPassword, cargo }); // Add logging
 
-    const response = await FornecedorModel.create({
-        nome,
-        cpf,
-        hashPassword,
-        cargo,
-    });
+        const response = await FornecedorModel.create({
+            nome: usuario,
+            cpf,
+            hashPassword,
+            cargo,
+        });
 
-    return res.status(200).send({
-        type: 'success',
-        message: 'Cadastro realizado com sucesso',
-        data: response,
-    });
+        return res.status(200).send({
+            type: 'success',
+            message: 'Cadastro realizado com sucesso',
+            data: response,
+        });
+    } catch (error) {
+        console.error('Error creating user:', error); // Add logging
+        return res.status(500).send({
+            type: 'error',
+            message: 'Erro ao realizar cadastro',
+            data: error.message,
+        });
+    }
 };
 
 const update = async (id, res, dados = {}) => {
-    const response = await FornecedorModel.findOne({ where: { id: id } });
+    try {
+        const response = await FornecedorModel.findOne({ where: { id: id } });
 
-    if (!response) {
-        return res.status(400).send({
-            message: `Nenhum registro com id ${id} para atualizar`,
-            data: [],
+        if (!response) {
+            return res.status(400).send({
+                message: `Nenhum registro com id ${id} para atualizar`,
+                data: [],
+            });
+        }
+
+        console.log('Updating user with data:', dados); // Add logging
+
+        Object.keys(dados).forEach((field) => response[field] = dados[field]);
+
+        await response.save();
+        return res.status(200).send({
+            message: `Registro id ${id} atualizado com sucesso`,
+            data: response,
+        });
+    } catch (error) {
+        console.error('Error updating user:', error); // Add logging
+        return res.status(500).send({
+            message: 'Ops! Ocorreu um erro',
+            data: error.message,
         });
     }
-    Object.keys(dados).forEach((field) => response[field] = dados[field]);
-
-    await response.save();
-    return res.status(200).send({
-        message: `Registro id ${id} atualizado com sucesso`,
-        data: response,
-    });
 };
 
 const persist = async (req, res) => {
@@ -84,7 +100,7 @@ const persist = async (req, res) => {
         const id = req.params.id ? req.params.id.toString().replace(/\D/g, '') : null;
 
         if (!id) {
-            return await create(req.body, res);
+            return await create(req, res);
         }
 
         return await update(id, res, req.body);
