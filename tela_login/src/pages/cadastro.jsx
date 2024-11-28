@@ -1,8 +1,8 @@
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Button, Flex, Heading, HStack, Image, Input, Link, Stack, Box, Text } from "@chakra-ui/react";
 import React, { useState } from "react";
-import { Checkbox } from "@/components/ui/checkbox"
-import { PasswordInput } from "@/components/ui/password-input"
+import { Checkbox } from "../components/ui/checkbox"
+import { PasswordInput } from "../components/ui/password-input"
 import { FaF, FaGoogle } from "react-icons/fa6";
 import { Separator } from "@chakra-ui/react"
 import { SiApple } from "react-icons/si";
