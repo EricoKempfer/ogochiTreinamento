@@ -11,6 +11,7 @@ import { IoIosAdd } from "react-icons/io";
 import { MdOutlineAdd } from "react-icons/md";
 import { MdEdit } from "react-icons/md";
 import { FaRegTrashAlt } from "react-icons/fa";
+import { FaSortAmountDown } from "react-icons/fa";
 
 const items = [
   { id: 1, name: "Laptop", category: "Electronics", price: 999.99 },
@@ -32,11 +33,15 @@ const products = () => {
             <Box justify="space-between" w="full">
               <HStack justify="space-between" w="full">
                 <Heading fontSize={30} marginBottom={"3"} >Lista de Produtos</Heading>
-                <IconButton marginBottom={"1"} textAlign="end" aria-label="Search database" variant="outline" >
+                <IconButton marginBottom={"1"} textAlign="end" aria-label="Search database" variant="outline" borderRadius={10} >
                   <LuSearch />
                 </IconButton>
               </HStack>
             </Box>
+            <IconButton borderRadius={10} pl={2} marginBottom={"1"} textAlign="end" aria-label="Search database" variant="outline"  gap={0} >
+            <FaSortAmountDown color="black"/>
+              <Text color={"black"} marginRight={2}>Ordenar</Text>
+            </IconButton>
             <IconButton borderRadius={10} p={2} marginBottom={"1"} textAlign="end" aria-label="Search database" variant="outline" border={"transparent"} bgColor={"green"} gap={0} >
               <MdOutlineAdd color="white" />
               <Text color={"white"} marginRight={2}>Adicionar Produto</Text>
