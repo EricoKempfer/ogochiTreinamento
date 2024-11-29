@@ -34,25 +34,6 @@ const cadastro = () => {
 
 	return (
 		<div>
-			<HStack
-				w="100%"
-				h="97vh"
-				bgColor={"gray.800"}
-			>
-				<Flex
-					w="220%"
-					h="full"
-				>
-					<Box
-						bgRepeat={"no-repeat"}
-						bgPos={"left"}
-						bgImage="url(https://images6.alphacoders.com/491/491674.jpg)"
-						p={5}
-						w="full"
-						h="full"
-						bgSize="cover"
-					/>
-				</Flex>
 				<Flex
 					w="full"
 					h="full"
@@ -193,8 +174,6 @@ const cadastro = () => {
 						</Button>
 					</Stack>
 				</Flex>
-
-			</HStack>
 		</div>
 	);
 }

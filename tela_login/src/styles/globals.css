@@ -1,16 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap');
 
 body {
-  background: #f2f2f2;
-  color: #333;
+  background: #d4d4d8; 
   font-family: "Nunito";
 }
 a {
-  color: #333;
+  color: gray;
   text-decoration: none;
 }
 .content {
   margin: 0 auto;
+  width: 100%;
+  height: 100%;
 }
 nav {
   margin: 10px auto 80px;
@@ -18,7 +19,7 @@ nav {
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid gray;
 }
 nav a {
   margin-left: 12px;
@@ -30,5 +31,12 @@ footer {
   display: flex;
   justify-content: center;
   text-align: center;
-  opacity: 0.5;
+  color: gray;
+}
+.topo {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  color: black;
+  font-size: larger;
 }
