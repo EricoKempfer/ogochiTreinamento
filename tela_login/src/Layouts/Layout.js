@@ -3,6 +3,9 @@ import Fim from "../components/Fimpagina";
 import Topopagina from "../components/Topopagina"
 import { TbBrandPepsi } from "react-icons/tb";
 import { AiOutlineProduct } from "react-icons/ai";
+import { CgProfile } from "react-icons/cg";
+import { MdOutlineAttachMoney } from "react-icons/md";
+import { BsQuestionCircle } from "react-icons/bs";
 
 const Layout = ({ children }) => {
   return (
@@ -23,9 +26,19 @@ const Layout = ({ children }) => {
           <Icon w={12} h={12} color={"#004B93"} marginLeft={3.5} marginTop={2} >
           <TbBrandPepsi />
           </Icon>
-          <Icon w={10} h={10} color={"gray"} marginLeft={4.5} marginTop={4} >
+          <Icon w={10} h={10} color={"gray"} marginLeft={4.5} marginTop={10} >
           <AiOutlineProduct />
           </Icon>
+          <Icon w={10} h={10} color={"gray"} marginLeft={4.5} marginTop={4} >
+          <CgProfile />
+          </Icon>
+          <Icon w={10} h={10} color={"gray"} marginLeft={4.5} marginTop={4} >
+          <MdOutlineAttachMoney />
+          </Icon>
+          <Icon w={10} h={10} color={"gray"} marginLeft={4.5} marginTop={4} >
+          <BsQuestionCircle />
+          </Icon>
+          
           </Box>
         </Flex>
         <VStack
