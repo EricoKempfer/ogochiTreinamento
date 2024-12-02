@@ -6,12 +6,9 @@ const get = async (req, res) => {
         
         if (!id) {
             const response = await MaterialModel.findAll({
-                order: [['idIdioma', 'asc']],
+                order: [['id', 'asc']],
             });
-            return res.status(200).send({
-                message: 'Registros carregados com sucesso',
-                data: response,
-            });
+            return res.status(200).send(response);
         }
         const response = await MaterialModel.findOne({ where: { id: id } });
 

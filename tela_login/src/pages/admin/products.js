@@ -12,6 +12,8 @@ import { MdOutlineAdd } from "react-icons/md";
 import { MdEdit } from "react-icons/md";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { FaSortAmountDown } from "react-icons/fa";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const items = [
   { id: 1, name: "Laptop", category: "Electronics", price: 999.99 },
@@ -19,9 +21,29 @@ const items = [
   { id: 3, name: "Desk Chair", category: "Furniture", price: 139.99 },
   { id: 4, name: "Smartphone", category: "Electronics", price: 799.99 },
   { id: 5, name: "Headphones", category: "Accessories", price: 199.99 },
-
 ]
+
+
+
 const products = () => {
+
+  const [material, setMaterial] = useState([]);
+
+  const fetchData = async() => {
+    try{
+    const response = await axios.get('http://localhost:3335/material')
+        if (Array.isArray(response.data)) {
+          setMaterial(response.data);
+        }
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+  }
+
+  useEffect(() => {
+    fetchData();
+  })
+
   return (
     <Stack width="full" bgColor={"#d4d4d8"} color={"black"} pl={20} pr={20} borderRadius={"10px"} >
       <Box
@@ -59,12 +81,12 @@ const products = () => {
             </Table.Row>
           </Table.Header >
           <Table.Body  >
-            {items.map((item) => (
+            {material.map((item) => (
               <Table.Row key={item.id} bgColor={"transparent"}  >
                 <Table.Cell >{item.id}</Table.Cell>
-                <Table.Cell>{item.name}</Table.Cell>
-                <Table.Cell>{item.category}</Table.Cell>
-                <Table.Cell>{item.price}</Table.Cell>
+                <Table.Cell>{item.tipo}</Table.Cell>
+                <Table.Cell>{item.nome}</Table.Cell>
+                <Table.Cell>{item.preço}</Table.Cell>
                 <Table.Cell>
                 {<IconButton size="xs" bgColor={"#004B93"} aria-label="Search database" marginRight={3}>
                   <MdEdit />
@@ -84,3 +106,5 @@ const products = () => {
 }
 
 export default products;
+
+
