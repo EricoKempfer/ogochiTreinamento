@@ -17,16 +17,6 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { Modal } from "../../components/Modal";
 
-const items = [
-  { id: 1, name: "Laptop", category: "Electronics", price: 999.99 },
-  { id: 2, name: "Coffee Maker", category: "Home Appliances", price: 49.99 },
-  { id: 3, name: "Desk Chair", category: "Furniture", price: 139.99 },
-  { id: 4, name: "Smartphone", category: "Electronics", price: 799.99 },
-  { id: 5, name: "Headphones", category: "Accessories", price: 199.99 },
-]
-
-
-
 const products = () => {
   const [material, setMaterial] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
@@ -104,7 +94,7 @@ const products = () => {
                 <Table.Cell >{item.id}</Table.Cell>
                 <Table.Cell>{item.tipo}</Table.Cell>
                 <Table.Cell>{item.nome}</Table.Cell>
-                <Table.Cell>{item.preço}</Table.Cell>
+                <Table.Cell>{item.valor}</Table.Cell>
                 <Table.Cell>
                 {<IconButton size="xs" bgColor={"#004B93"} aria-label="Search database" marginRight={3}>
                   <MdEdit />

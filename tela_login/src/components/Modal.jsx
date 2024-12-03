@@ -17,11 +17,11 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
   
   const [tipo, setTipo] = useState('');
 	const [nome, setNome] = useState('');
-	const [preço, setPreço] = useState('');
+	const [valor, setValor] = useState('');
 
   const handleProduto = async (e) => {
     e.preventDefault();
-    const payload = { tipo, nome, preço: parseInt(preço, 10) };
+    const payload = { tipo, nome, valor};
     try {
       await onSubmit(payload);
       closeModal();
@@ -55,8 +55,8 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
             <label htmlFor="preço">Preço</label>
             <input
               name="preço"
-              onChange={(e) => setPreço(e.target.value)}
-              value={preço}
+              onChange={(e) => setValor(e.target.value)}
+              value={valor}
             />
           </div>
           <button type="submit" className={styles.btn} onClick={handleProduto}>
