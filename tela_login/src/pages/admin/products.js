@@ -14,6 +14,8 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import { FaSortAmountDown } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
+import { Modal } from "../../components/Modal";
 
 const items = [
   { id: 1, name: "Laptop", category: "Electronics", price: 999.99 },
@@ -26,9 +28,8 @@ const items = [
 
 
 const products = () => {
-
   const [material, setMaterial] = useState([]);
-
+  const [modalOpen, setModalOpen] = useState(false);
   const fetchData = async() => {
     try{
     const response = await axios.get('http://localhost:3335/material')
@@ -39,6 +40,15 @@ const products = () => {
     console.error('Error fetching data:', error);
   }
   }
+
+  const handleAddProduct = async (product) => {
+    try {
+      const response = await axios.post('http://localhost:3335/material', product);
+      setMaterial([...material, response.data]);
+    } catch (error) {
+      console.error('Error adding product:', error);
+    }
+  };
 
   useEffect(() => {
     fetchData();
@@ -66,8 +76,16 @@ const products = () => {
             </IconButton>
             <IconButton borderRadius={10} p={2} marginBottom={"1"} textAlign="end" aria-label="Search database" variant="outline" border={"transparent"} bgColor={"green"} gap={0} >
               <MdOutlineAdd color="white" />
-              <Text color={"white"} marginRight={2}>Adicionar Produto</Text>
+              <Text color={"white"} marginRight={2} onClick={() => setModalOpen(true)} >Adicionar Produto</Text>
             </IconButton>
+            {modalOpen && (
+        <Modal
+          closeModal={() => {
+            setModalOpen(false);
+          }}
+          onSubmit={handleAddProduct}
+        />
+      )}
           </HStack>
         </Box>
         <Table.Root  >
