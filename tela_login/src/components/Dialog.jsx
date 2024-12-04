@@ -1,36 +1,43 @@
-import { Input, Stack } from "@chakra-ui/react"
-import { Button } from "@/components/ui/button"
-import {
-  DialogActionTrigger,
-  DialogBody,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogRoot,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
-import { Field } from "@/components/ui/field"
-import { useRef } from "react"
+import { Button, Input, Stack } from "@chakra-ui/react"
+import { Field } from "../components/ui/field"
+import { useState } from "react"
+import React from 'react';
+import { RiPencilFill } from "react-icons/ri";
+import { DialogBody, DialogCloseTrigger, DialogContent, DialogFooter, DialogHeader, DialogRoot, DialogTitle, DialogTrigger, DialogActionTrigger } from "../components/ui/dialog"
 
-const Demo = () => {
-  const ref = useRef<HTMLInputElement>(null)
+export const Dialog = ({ data, onSubmit }) => {
+  const [nome, setNome] = useState(data.nome);
+  const [tipo, setTipo] = useState(data.tipo);
+  const [valor, setValor] = useState(data.valor);
+
+  const handleSave = () => {
+    const updatedProduct = { tipo, nome, valor };
+    onSubmit(data.id, updatedProduct);
+  };
+
   return (
-    <DialogRoot initialFocusEl={() => ref.current}>
+    <DialogRoot>
       <DialogTrigger asChild>
-        <Button variant="outline">Open</Button>
+        <Button size="xs" bgColor={"#004B93"} p={0} borderRadius={6}>
+          <RiPencilFill />
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Dialog Header</DialogTitle>
+          <DialogTitle>Editar Informações</DialogTitle>
         </DialogHeader>
-        <DialogBody pb="4">
+        <DialogBody>
           <Stack gap="4">
-            <Field label="First Name">
-              <Input placeholder="First Name" />
-            </Field>
-            <Field label="Last Name">
-              <Input ref={ref} placeholder="Focus First" />
+            <Field>
+              <Field label="Tipo">
+                <Input value={tipo} onChange={(e) => setTipo(e.target.value)} placeholder="Digite o Tipo" _placeholder={{ color: "gray.800" }} />
+              </Field>
+              <Field label="Nome">
+                <Input value={nome} onChange={(e) => setNome(e.target.value)} placeholder="Digite o Nome" _placeholder={{ color: "gray.800" }} />
+              </Field>
+              <Field label="Preço">
+                <Input value={valor} onChange={(e) => setValor(e.target.value)} placeholder="Digite o Preço" _placeholder={{ color: "gray.800" }} />
+              </Field>
             </Field>
           </Stack>
         </DialogBody>
@@ -38,9 +45,10 @@ const Demo = () => {
           <DialogActionTrigger asChild>
             <Button variant="outline">Cancel</Button>
           </DialogActionTrigger>
-          <Button>Save</Button>
+          <Button onClick={handleSave}>Save</Button>
         </DialogFooter>
+        <DialogCloseTrigger />
       </DialogContent>
     </DialogRoot>
-  )
+  );
 }

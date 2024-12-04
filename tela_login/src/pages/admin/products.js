@@ -16,6 +16,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { Modal } from "../../components/Modal";
+import { Dialog } from "../../components/Dialog";
 import { Alert } from "../../components/ui/alert"
 
 const products = () => {
@@ -44,6 +45,18 @@ const products = () => {
     } catch (error) {
       console.error('Error deleting product:', error);
       setAlertVisible(true);
+    }
+  }
+
+  const handleEditProduct = async (id, updatedProduct) => {
+    try {
+      const response = await axios.patch(`http://localhost:3335/material/${id}`, updatedProduct);
+      if (response.status === 200) {
+        setMaterial(material.map(item => item.id === id ? response.data : item));
+        location.reload()
+      }
+    } catch (error) {
+      console.error('Error editing product:', error);
     }
   }
 
@@ -111,23 +124,20 @@ const products = () => {
               <Table.ColumnHeader pl={8} color={"white"} borderRadius={"0px 10px 0px 0px"}>Ações</Table.ColumnHeader>
             </Table.Row>
           </Table.Header >
-          <Table.Body  >
+          <Table.Body>
             {material.map((item) => (
-              <Table.Row key={item.id} bgColor={"transparent"}  >
-                <Table.Cell >{item.id}</Table.Cell>
+              <Table.Row key={item.id} bgColor={"transparent"}>
+                <Table.Cell>{item.id}</Table.Cell>
                 <Table.Cell>{item.tipo}</Table.Cell>
                 <Table.Cell>{item.nome}</Table.Cell>
                 <Table.Cell>{item.valor}</Table.Cell>
                 <Table.Cell>
-                {<IconButton size="xs" bgColor={"#004B93"} aria-label="Search database" marginRight={3}>
-                  <MdEdit />
-                </IconButton>}
-                {<IconButton size="xs" bgColor={"red"} aria-label="Search database" onClick={() => deleta(item.id)} >
-                  <FaRegTrashAlt />
-                </IconButton>}
+                  <Dialog data={item} onSubmit={handleEditProduct} />
+                  <IconButton marginLeft={3} borderRadius={6} size="xs" bgColor={"red"} aria-label="Delete product" onClick={() => deleta(item.id)}>
+                    <FaRegTrashAlt />
+                  </IconButton>
                 </Table.Cell>
               </Table.Row>
-
             ))}
           </Table.Body>
         </Table.Root>
