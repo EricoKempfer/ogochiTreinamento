@@ -25,6 +25,7 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
     try {
       await onSubmit(payload);
       closeModal();
+      location.reload();
     } catch (error) {
       console.error('Erro ao realizar cadastro:', error);
     }

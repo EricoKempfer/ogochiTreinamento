@@ -14,11 +14,11 @@ const Layout = ({ children }) => {
       <HStack w="100%" h="100vh">
         <Flex
           w="4%"
-          h="full"
+          h="100vh"
           direction="column" // Use column direction to stack icons vertically
           justify="space-between" // Push icons to the top and bottom
         >
-          <Box bgColor="white" w="full" h="full">
+          <Box bgColor="white" w="full" h="100vh">
             <Icon w={12} h={12} color={"#004B93"} marginLeft={3.5} marginTop={2}>
               <TbBrandPepsi />
             </Icon>

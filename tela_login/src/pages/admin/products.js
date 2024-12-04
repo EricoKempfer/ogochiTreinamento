@@ -16,10 +16,13 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { Modal } from "../../components/Modal";
+import { Alert } from "../../components/ui/alert"
 
 const products = () => {
   const [material, setMaterial] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
+  const [alertVisible, setAlertVisible] = useState(false);
+
   const fetchData = async() => {
     try{
     const response = await axios.get('http://localhost:3335/material')
@@ -29,6 +32,19 @@ const products = () => {
   } catch (error) {
     console.error('Error fetching data:', error);
   }
+  }
+
+  const deleta = async (id) => {
+    try {
+      const response = await axios.delete(`http://localhost:3335/material/${id}`);
+      if (response.status === 200) {
+        setMaterial(material.filter(item => item.id !== id));
+        
+      }
+    } catch (error) {
+      console.error('Error deleting product:', error);
+      setAlertVisible(true);
+    }
   }
 
   const handleAddProduct = async (product) => {
@@ -42,10 +58,17 @@ const products = () => {
 
   useEffect(() => {
     fetchData();
-  })
+  }, [])
 
   return (
     <Stack width="full" bgColor={"#d4d4d8"} color={"black"} pl={20} pr={20} borderRadius={"10px"} >
+      {alertVisible && (
+        <Alert
+          status="error"
+          title="There was an error processing your request"
+          onClose={() => setAlertVisible(false)}
+        />
+      )}
       <Box
         borderRadius={"10px"}
         backgroundColor={"white"}
@@ -99,7 +122,7 @@ const products = () => {
                 {<IconButton size="xs" bgColor={"#004B93"} aria-label="Search database" marginRight={3}>
                   <MdEdit />
                 </IconButton>}
-                {<IconButton size="xs" bgColor={"red"} aria-label="Search database">
+                {<IconButton size="xs" bgColor={"red"} aria-label="Search database" onClick={() => deleta(item.id)} >
                   <FaRegTrashAlt />
                 </IconButton>}
                 </Table.Cell>
