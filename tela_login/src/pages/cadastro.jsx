@@ -167,7 +167,7 @@ const cadastro = () => {
 						</SelectRoot>
 						
 					</FormControl > */}
-					<Field color={"white"} label="Cargo" isInvalid={invalid && !cargo}>
+					<Field color={"white"} label="Cargo" >
 						<NativeSelectRoot size="md">
 							<NativeSelectField
 								color={"whiteAlpha.700"}
@@ -184,7 +184,7 @@ const cadastro = () => {
 								<option value="cliente">Cliente</option>
 							</NativeSelectField>
 						</NativeSelectRoot>
-						{invalid && !cargo && <Text color="red.500">Selecione um cargo</Text>}
+						{invalid && !cargo && <Text fontSize={"12"} color="red.500">Selecione um cargo</Text>}
 					</Field>
 					<FormControl pb={5} id="senha" color={"white"}>
 						<FormLabel pb={5}>Senha</FormLabel>
