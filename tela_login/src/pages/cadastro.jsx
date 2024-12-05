@@ -1,5 +1,5 @@
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
-import { Button, Flex, Heading, HStack, Image, Input, Link, Stack, Box, Text, Field, Select } from "@chakra-ui/react";
+import { Button, Flex, Heading, HStack, Image, Input, Link, Stack, Box, Text, Select } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { Checkbox } from "../components/ui/checkbox"
 import { PasswordInput } from "../components/ui/password-input"
@@ -10,17 +10,15 @@ import { Icon } from "@chakra-ui/react"
 import { FaFacebook } from "react-icons/fa";
 import { sendDataToAPI } from '../utils/axios';
 import { createListCollection } from "@chakra-ui/react"
+import { Field } from "../components/ui/field"
 import {
-	SelectContent,
-	SelectItem,
-	SelectLabel,
-	SelectRoot,
-	SelectTrigger,
-	SelectValueText,
-} from "../components/ui/select"
+	NativeSelectField,
+	NativeSelectRoot,
+} from "../components/ui/native-select"
+import Fimpagina from "../components/Fimpagina";
 
 const cadastro = () => {
-	
+
 	const [invalid, setInvalid] = useState(false);
 	const [visible, setVisible] = useState(false);
 
@@ -29,12 +27,12 @@ const cadastro = () => {
 	const [cargo, setCargo] = useState('');
 	const [senha, setSenha] = useState('');
 
-	const frameworks = createListCollection({
-		items: [
-			{ label: "Cliente", value: "cliente" },
-			{ label: "Admin", value: "admin" },
-		],
-	})
+	// const frameworks = createListCollection({
+	// 	items: [
+	// 		{ label: "Cliente", value: "cliente" },
+	// 		{ label: "Admin", value: "admin" },
+	// 	],
+	// })
 
 
 	const handleCadastro = async () => {
@@ -47,6 +45,7 @@ const cadastro = () => {
 			console.log('Sending payload:', payload); // Add this line
 			const response = await sendDataToAPI('/fornecedor', payload);
 			console.log('Cadastro realizado com sucesso:', response);
+			location.reload();
 		} catch (error) {
 			console.error('Erro ao realizar cadastro:', error);
 		}
@@ -54,6 +53,25 @@ const cadastro = () => {
 
 	return (
 		<div>
+			<HStack
+				w="100%"
+				h="97vh"
+				bgColor={"gray.800"}
+			>
+				<Flex
+					w="220%"
+					h="full"
+				>
+					<Box
+						bgRepeat={"no-repeat"}
+						bgPos={"left"}
+						bgImage="url(https://images6.alphacoders.com/491/491674.jpg)"
+						p={5}
+						w="full"
+						h="full"
+						bgSize="cover"
+					/>
+				</Flex>
 			<Flex
 				w="full"
 				h="full"
@@ -106,25 +124,68 @@ const cadastro = () => {
 							onChange={(e) => setCpf(e.target.value)}
 						/>
 					</FormControl >
-					<FormControl pb={10} id="cargo" color={"white"} isInvalid={invalid && !cargo}>
+
+					{/* <FormControl pb={10} id="cargo" color={"white"} isInvalid={invalid && !cargo}>
 						<FormLabel pb={5}>Cargo</FormLabel>
-						
 						<SelectRoot invalid={invalid && !cargo} errorText="Selecione um cargo" collection={frameworks} size="sm" width="320px">
-							<SelectLabel >Select framework</SelectLabel>
+							<SelectLabel onChange={(e) => setCargo(e.currentTarget.value) }>Selecione o Cargo</SelectLabel>
 							<SelectTrigger bgColor={"black"} >
-								<SelectValueText color={"whiteAlpha.700"} placeholder="Selecione seu cargo" />
+								<SelectValueText color={"whiteAlpha.700"} placeholder="Selecione seu cargo">
+								</SelectValueText>
 							</SelectTrigger>
 							<SelectContent>
-								{frameworks.items.map((movie) => (
-									<SelectItem item={movie} key={movie.value}>
-										{movie.label}
+									<SelectItem>
 									</SelectItem>
-								))}
+							</SelectContent>
+						</SelectRoot>
+					</FormControl >
+					
+					<FormControl pb={10} id="cargo" color={"white"} isInvalid={invalid && !cargo}>
+						<FormLabel pb={5}>Cargo</FormLabel>
+						<SelectRoot invalid={invalid && !cargo} errorText="Selecione um cargo" collection={frameworks} size="sm" width="320px">
+							<SelectLabel onChange={(e) => setCargo(e.currentTarget.value) }>Selecione o Cargo</SelectLabel>
+							<SelectTrigger bgColor={"black"} >
+								<SelectValueText color={"whiteAlpha.700"} placeholder="Selecione seu cargo">
+								</SelectValueText>
+							</SelectTrigger>
+							<SelectContent>
+									<
+										item={a}
+										ke=e}
+							ct={() => setCargo(item.value)}
+										item={item}
+										key={item.value}
+										onSelect={() => setCargo(item.value)}
+									>
+										{item.
+	
+										{frameworks.items.map((a) => (
+									<SelectItem>
+
+					
 							</SelectContent>
 						</SelectRoot>
 						
-					</FormControl >
-					
+					</FormControl > */}
+					<Field color={"white"} label="Cargo" isInvalid={invalid && !cargo}>
+						<NativeSelectRoot size="md">
+							<NativeSelectField
+								color={"whiteAlpha.700"}
+								backgroundColor={"black"}
+								_focus={{ borderColor: invalid && !cargo ? "red.500" : "#004B93" }} // Change border color if invalid
+								placeholder="Selecione seu cargo"
+								borderColor="transparent"
+								onChange={(e) => {
+									setCargo(e.target.value);
+									if (e.target.value) setInvalid(false); // Reset invalid state if a value is selected
+								}}
+							>
+								<option value="admin">Admin</option>
+								<option value="cliente">Cliente</option>
+							</NativeSelectField>
+						</NativeSelectRoot>
+						{invalid && !cargo && <Text color="red.500">Selecione um cargo</Text>}
+					</Field>
 					<FormControl pb={5} id="senha" color={"white"}>
 						<FormLabel pb={5}>Senha</FormLabel>
 						<PasswordInput
@@ -201,6 +262,8 @@ const cadastro = () => {
 					</Button>
 				</Stack>
 			</Flex>
+			</HStack>
+			<Fimpagina />
 		</div>
 	);
 }
