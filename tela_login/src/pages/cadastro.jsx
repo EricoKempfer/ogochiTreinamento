@@ -20,7 +20,7 @@ import {
 } from "../components/ui/select"
 
 const cadastro = () => {
-
+	
 	const [invalid, setInvalid] = useState(false);
 	const [visible, setVisible] = useState(false);
 
@@ -35,6 +35,7 @@ const cadastro = () => {
 			{ label: "Admin", value: "admin" },
 		],
 	})
+
 
 	const handleCadastro = async () => {
 		if (!cargo) {
