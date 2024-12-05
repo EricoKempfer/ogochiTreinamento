@@ -9,9 +9,9 @@ import { FaSortAmountDown } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { Modal } from "../components/Modal";
-import { Dialog } from "../components/Dialog";
-import { Alert } from "../components/ui/alert"
+import { Modal } from "./Modal";
+import { Dialog } from "./Dialog";
+import { Alert } from "./ui/alert"
 
 const products = ({material=[], handleEditProduct, deleta}) => {
   

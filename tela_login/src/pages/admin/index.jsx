@@ -68,7 +68,6 @@ const AdminPage = () => {
     fetchData();
   }, [])
   return (
-    
     <Layout>
       <Products material={material} deleta={deleta} handleEditProduct={handleEditProduct} handleAddProduct={handleAddProduct}/>
     </Layout>

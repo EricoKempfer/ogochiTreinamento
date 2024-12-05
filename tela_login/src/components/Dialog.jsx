@@ -1,9 +1,9 @@
 import { Button, Input, Stack } from "@chakra-ui/react"
-import { Field } from "../components/ui/field"
+import { Field } from "./ui/field"
 import { useState } from "react"
 import React from 'react';
 import { RiPencilFill } from "react-icons/ri";
-import { DialogBody, DialogCloseTrigger, DialogContent, DialogFooter, DialogHeader, DialogRoot, DialogTitle, DialogTrigger, DialogActionTrigger } from "../components/ui/dialog"
+import { DialogBody, DialogCloseTrigger, DialogContent, DialogFooter, DialogHeader, DialogRoot, DialogTitle, DialogTrigger, DialogActionTrigger } from "./ui/dialog"
 
 export const Dialog = ({ data, onSubmit }) => {
   const [nome, setNome] = useState(data.nome);
