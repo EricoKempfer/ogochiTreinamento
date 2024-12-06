@@ -18,7 +18,7 @@ import { Alert } from "../../components/ui/alert"
 
 const AdminPage = () => {
   const [material, setMaterial] = useState([]);
-
+  
   const fetchData = async() => {
     try{
     const response = await axios.get('http://localhost:3335/material')
@@ -30,7 +30,7 @@ const AdminPage = () => {
   }
   }
 
-  const deleta = async (id) => {
+  const deleta = async (id, setAlertVisible) => {
     try {
       const response = await axios.delete(`http://localhost:3335/material/${id}`);
       if (response.status === 200) {
@@ -40,6 +40,9 @@ const AdminPage = () => {
     } catch (error) {
       console.error('Error deleting product:', error);
       setAlertVisible(true);
+      setTimeout(() => {
+        setAlertVisible(false);
+      }, 3000);
     }
   }
 
@@ -69,7 +72,7 @@ const AdminPage = () => {
   }, [])
   return (
     <Layout>
-      <Products material={material} deleta={deleta} handleEditProduct={handleEditProduct} handleAddProduct={handleAddProduct}/>
+      <Products material={material} deleta={deleta} handleEditProduct={handleEditProduct} handleAddProduct={handleAddProduct} />
     </Layout>
   );
 };

@@ -79,7 +79,7 @@ const products = ({material=[], handleEditProduct, handleAddProduct, deleta}) =>
                 <Table.Cell>{item.valor}</Table.Cell>
                 <Table.Cell>
                   <Dialog data={item} onSubmit={handleEditProduct} />
-                  <IconButton marginLeft={3} borderRadius={6} size="xs" bgColor={"red"} aria-label="Delete product" onClick={() => deleta(item.id)}>
+                  <IconButton marginLeft={3} borderRadius={6} size="xs" bgColor={"red"} aria-label="Delete product" onClick={() => deleta(item.id, setAlertVisible )}>
                     <FaRegTrashAlt />
                   </IconButton>
                 </Table.Cell>

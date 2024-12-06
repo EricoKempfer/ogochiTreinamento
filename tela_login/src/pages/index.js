@@ -9,9 +9,33 @@ import { SiApple } from "react-icons/si";
 import { Icon } from "@chakra-ui/react"
 import Fimpagina  from "../components/Fimpagina"
 import { FaFacebook } from "react-icons/fa";
+import { useRouter } from 'next/router'
+import axios from 'axios';
 
 export default function Home() {
-  const [visible, setVisible] = useState(false)
+  const [visible, setVisible] = useState(false);
+  const [usuario, setUsuario] = useState('');
+  const [senha, setSenha] = useState('');
+  const router = useRouter()
+
+  const handleLogin = async () => {
+    try {
+      console.log('Attempting login with:', { nome: usuario, senha }); // Add logging
+      const response = await axios.post('http://localhost:3335/fornecedor/login', { nome: usuario, senha });
+      console.log('Login response:', response.data); // Add logging
+      if (response.data.type === 'success') {
+        router.push('http://localhost:3000/admin')
+        alert('Login realizado com sucesso');
+        
+      } else {
+        alert('Usuario ou senha incorretos');
+      }
+    } catch (error) {
+      console.error('Login error:', error); // Add logging
+      alert('Erro ao realizar login');
+    }
+  };
+
   return (
     <div>
     <HStack
@@ -63,7 +87,15 @@ export default function Home() {
           <Text pb={1} color="whiteAlpha.500" fontSize={14}>Digite suas credenciais</Text>
           <FormControl pb={10} id="usuario" color={"white"}>
             <FormLabel pb={5}>Usuário</FormLabel>
-            <Input borderColor="transparent" bgColor={"black"} placeholder="Seu usuário" _placeholder={{ color: "whiteAlpha.700" }} _focus={{ borderColor: "#004B93" }} />
+            <Input 
+              borderColor="transparent" 
+              bgColor={"black"} 
+              placeholder="Seu usuário" 
+              _placeholder={{ color: "whiteAlpha.700" }} 
+              _focus={{ borderColor: "#004B93" }} 
+              value={usuario}
+              onChange={(e) => setUsuario(e.target.value)}
+            />
           </FormControl >
           <FormControl pb={5} id="senha" color={"white"}>
             <FormLabel pb={5}>Senha</FormLabel>
@@ -75,6 +107,8 @@ export default function Home() {
               _focus={{ borderColor: "#004B93" }}
               visible={visible}
               onVisibleChange={setVisible}
+              value={senha}
+              onChange={(e) => setSenha(e.target.value)}
             />
             <Text color="whiteAlpha.500" fontSize={13} pl={0.4} pb={0}>Password is {visible ? "visible" : "hidden"}</Text>
           </FormControl>
@@ -89,7 +123,7 @@ export default function Home() {
             <Checkbox colorPalette="blue" size="md" color={"white"}>Lembrar-me</Checkbox>
             <Link color="#004B93" fontWeight={700} fontSize={14}>Esqueci minha senha</Link>
           </Stack>
-          <Button borderRadius={20} bgColor="#004B93">Entrar</Button>
+          <Button borderRadius={20} bgColor="#004B93" onClick={handleLogin}>Entrar</Button>
           <HStack pb={2} pt={2}>
             <Separator borderColor='whiteAlpha.700' />
             <Text flexShrink="0" color="whiteAlpha.700">OU</Text>
