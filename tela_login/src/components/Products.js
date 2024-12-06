@@ -13,7 +13,7 @@ import { Modal } from "./Modal";
 import { Dialog } from "./Dialog";
 import { Alert } from "./ui/alert"
 
-const products = ({material=[], handleEditProduct, deleta}) => {
+const products = ({material=[], handleEditProduct, handleAddProduct, deleta}) => {
   
   const [modalOpen, setModalOpen] = useState(false);
   const [alertVisible, setAlertVisible] = useState(false);

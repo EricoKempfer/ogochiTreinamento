@@ -11,6 +11,7 @@ import { FaFacebook } from "react-icons/fa";
 import { sendDataToAPI } from '../utils/axios';
 import { createListCollection } from "@chakra-ui/react"
 import { Field } from "../components/ui/field"
+import { useRouter } from 'next/router'
 import {
 	NativeSelectField,
 	NativeSelectRoot,
@@ -26,7 +27,7 @@ const cadastro = () => {
 	const [cpf, setCpf] = useState('');
 	const [cargo, setCargo] = useState('');
 	const [senha, setSenha] = useState('');
-
+	const router = useRouter()
 	// const frameworks = createListCollection({
 	// 	items: [
 	// 		{ label: "Cliente", value: "cliente" },
@@ -45,7 +46,7 @@ const cadastro = () => {
 			console.log('Sending payload:', payload); // Add this line
 			const response = await sendDataToAPI('/fornecedor', payload);
 			console.log('Cadastro realizado com sucesso:', response);
-			location.reload();
+			router.push('http://localhost:3000')
 		} catch (error) {
 			console.error('Erro ao realizar cadastro:', error);
 		}
