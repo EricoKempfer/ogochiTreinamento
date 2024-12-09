@@ -25,6 +25,12 @@ const FornecedorModel = sequelize.define(
         },
         email: {
             type: DataTypes.TEXT,
+        },
+        recuperation: {
+            type: DataTypes.TEXT,
+        },
+        newPassword: {
+            type: DataTypes.TEXT,
         }
     },
     {

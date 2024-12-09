@@ -1,4 +1,3 @@
-
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Button, Flex, Heading, HStack, Input, Stack, Box, Text } from "@chakra-ui/react";
 import React, { useState } from "react";
@@ -28,7 +27,8 @@ export default function RecuperarSenha() {
 
   const handleVerifyCode = async () => {
     try {
-      const response = await axios.post('http://localhost:3335/fornecedor/verify-reset-code', { email, code });
+      const response = await axios.post('http://localhost:3335/fornecedor/verify-reset-code', { code, email });
+      console.log('Verification response:', response.data); // Debugging line
       if (response.data.type === 'success') {
         setStep(3);
       } else {
@@ -42,8 +42,8 @@ export default function RecuperarSenha() {
 
   const handleUpdatePassword = async () => {
     try {
-      const response = await axios.post('http://localhost:3335/fornecedor/update-password', { email, newPassword });
-      if (response.data.type === 'info') {
+      const response = await axios.post('http://localhost:3335/fornecedor/update-password', { newPassword, email});
+      if (response.data.type === 'success') {
         alert('Senha atualizada com sucesso');
         router.push('/');
       } else {

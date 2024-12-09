@@ -1,7 +1,7 @@
 import nodemailer from 'nodemailer';
-import User from '../models/UserModel';
+import User from '../models/FornecedorModel';
 import crypto from 'crypto';
-import bcrypt from 'bcryptjs';
+import bcrypt from 'bcrypt';
 import http from 'https';
 
 async function send(req, res) {
@@ -72,6 +72,10 @@ const receiveCode = async (req, res) => {
   try {
     const { code, email } = req.body;
     const user = await User.findOne({ where: { email } });
+
+    console.log('Received code:', code); // Debugging line
+    console.log('User data:', user); // Debugging line
+    console.log('User recovery code:', user.recuperation); // Debugging line
 
     if (!user || user.recuperation !== code) {
       return res.status(400).send({
