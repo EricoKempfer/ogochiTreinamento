@@ -10,12 +10,14 @@ import { Icon } from "@chakra-ui/react"
 import Fimpagina  from "../components/Fimpagina"
 import { FaFacebook } from "react-icons/fa";
 import { useRouter } from 'next/router'
+import { toaster } from "../components/ui/toaster"
 import axios from 'axios';
 
 export default function Home() {
   const [visible, setVisible] = useState(false);
   const [usuario, setUsuario] = useState('');
   const [senha, setSenha] = useState('');
+  const [email, setEmail] = useState('');
   const router = useRouter()
 
   const handleLogin = async () => {
@@ -24,15 +26,14 @@ export default function Home() {
       const response = await axios.post('http://localhost:3335/fornecedor/login', { nome: usuario, senha });
       console.log('Login response:', response.data); // Add logging
       if (response.data.type === 'success') {
-        router.push('http://localhost:3000/admin')
-        alert('Login realizado com sucesso');
+        await router.push('http://localhost:3000/admin')
         
       } else {
         alert('Usuario ou senha incorretos');
       }
     } catch (error) {
       console.error('Login error:', error); // Add logging
-      alert('Erro ao realizar login');
+      alert('Usuario ou senha incorretos');
     }
   };
 
@@ -40,7 +41,7 @@ export default function Home() {
     <div>
     <HStack
       w="100%"
-      h="97vh"
+      h="100vh"
       bgColor={"gray.800"}
     >
       <Flex
@@ -121,7 +122,7 @@ export default function Home() {
             pl={0.5}
           >
             <Checkbox colorPalette="blue" size="md" color={"white"}>Lembrar-me</Checkbox>
-            <Link color="#004B93" fontWeight={700} fontSize={14}>Esqueci minha senha</Link>
+            <Link color="#004B93" fontWeight={700} fontSize={14} href="/recuperar-senha">Esqueci minha senha</Link>
           </Stack>
           <Button borderRadius={20} bgColor="#004B93" onClick={handleLogin}>Entrar</Button>
           <HStack pb={2} pt={2}>

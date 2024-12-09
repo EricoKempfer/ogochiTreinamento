@@ -27,13 +27,8 @@ const cadastro = () => {
 	const [cpf, setCpf] = useState('');
 	const [cargo, setCargo] = useState('');
 	const [senha, setSenha] = useState('');
+	const [email, setEmail] = useState('');
 	const router = useRouter()
-	// const frameworks = createListCollection({
-	// 	items: [
-	// 		{ label: "Cliente", value: "cliente" },
-	// 		{ label: "Admin", value: "admin" },
-	// 	],
-	// })
 
 
 	const handleCadastro = async () => {
@@ -42,7 +37,7 @@ const cadastro = () => {
 			return;
 		}
 		try {
-			const payload = { usuario, cpf, senha, cargo };
+			const payload = { usuario, email, cpf, senha, cargo };
 			console.log('Sending payload:', payload); // Add this line
 			const response = await sendDataToAPI('/fornecedor', payload);
 			console.log('Cadastro realizado com sucesso:', response);
@@ -113,6 +108,18 @@ const cadastro = () => {
 							onChange={(e) => setUsuario(e.target.value)}
 						/>
 					</FormControl >
+					<FormControl pb={10} id="email" color={"white"}>
+						<FormLabel pb={5}>Email</FormLabel>
+						<Input
+							borderColor="transparent"
+							bgColor={"black"}
+							placeholder="Seu email"
+							_placeholder={{ color: "whiteAlpha.700" }}
+							_focus={{ borderColor: "#004B93" }}
+							value={email}
+							onChange={(e) => setEmail(e.target.value)}
+						/>
+					</FormControl >
 					<FormControl pb={10} id="cpf" color={"white"}>
 						<FormLabel pb={5}>Cpf</FormLabel>
 						<Input
@@ -125,49 +132,6 @@ const cadastro = () => {
 							onChange={(e) => setCpf(e.target.value)}
 						/>
 					</FormControl >
-
-					{/* <FormControl pb={10} id="cargo" color={"white"} isInvalid={invalid && !cargo}>
-						<FormLabel pb={5}>Cargo</FormLabel>
-						<SelectRoot invalid={invalid && !cargo} errorText="Selecione um cargo" collection={frameworks} size="sm" width="320px">
-							<SelectLabel onChange={(e) => setCargo(e.currentTarget.value) }>Selecione o Cargo</SelectLabel>
-							<SelectTrigger bgColor={"black"} >
-								<SelectValueText color={"whiteAlpha.700"} placeholder="Selecione seu cargo">
-								</SelectValueText>
-							</SelectTrigger>
-							<SelectContent>
-									<SelectItem>
-									</SelectItem>
-							</SelectContent>
-						</SelectRoot>
-					</FormControl >
-					
-					<FormControl pb={10} id="cargo" color={"white"} isInvalid={invalid && !cargo}>
-						<FormLabel pb={5}>Cargo</FormLabel>
-						<SelectRoot invalid={invalid && !cargo} errorText="Selecione um cargo" collection={frameworks} size="sm" width="320px">
-							<SelectLabel onChange={(e) => setCargo(e.currentTarget.value) }>Selecione o Cargo</SelectLabel>
-							<SelectTrigger bgColor={"black"} >
-								<SelectValueText color={"whiteAlpha.700"} placeholder="Selecione seu cargo">
-								</SelectValueText>
-							</SelectTrigger>
-							<SelectContent>
-									<
-										item={a}
-										ke=e}
-							ct={() => setCargo(item.value)}
-										item={item}
-										key={item.value}
-										onSelect={() => setCargo(item.value)}
-									>
-										{item.
-	
-										{frameworks.items.map((a) => (
-									<SelectItem>
-
-					
-							</SelectContent>
-						</SelectRoot>
-						
-					</FormControl > */}
 					<Field color={"white"} label="Cargo" >
 						<NativeSelectRoot size="md">
 							<NativeSelectField
@@ -247,20 +211,7 @@ const cadastro = () => {
 						<Text>Entrar com a Apple</Text>
 					</Button>
 
-					<Button
-						borderRadius={20}
-						bgColor="white"
-						color="black"
-						alignItems="center"
-						justifyContent="center"
-						gap={1} // Adds space between icon and text
-						style={{ marginBottom: '10px' }}
-					>
-						<Icon fontSize="20px">
-							<FaFacebook />
-						</Icon>
-						<Text >Entrar com o Facebook</Text>
-					</Button>
+					
 				</Stack>
 			</Flex>
 			</HStack>

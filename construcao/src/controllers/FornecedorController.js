@@ -1,24 +1,24 @@
 import FornecedorModel from '../models/FornecedorModel.js';
 import jwt from "jsonwebtoken";
 import * as bcrypt from "bcrypt";
+import Email from '../middleware/Email';
 
 const get = async (req, res) => {
     try {
         const id = req.params.id ? req.params.id.toString().replace(/\D/g, '') : null;
 
         if (!id) {
-            const response = await FornecedorModel.findAll({
-                order: [['id', 'asc']],
-            });
+            const response = await FornecedorModel.findAll({ order: [['id', 'asc']] });
             return res.status(200).send({
                 message: 'Registros carregados com sucesso',
                 data: response,
             });
         }
-        const response = await FornecedorModel.findOne({ where: { id: id } });
+
+        const response = await FornecedorModel.findOne({ where: { id } });
 
         if (!response) {
-            return res.status(400).send({
+            return res.status(404).send({
                 message: `Nenhum registro com id ${id}`,
                 data: [],
             });
@@ -37,27 +37,28 @@ const get = async (req, res) => {
 };
 
 const create = async (req, res) => {
-    const { usuario, cpf, senha, cargo } = req.body;
+    const { usuario, email, cpf, senha, cargo } = req.body;
 
     try {
-        let hashPassword = await bcrypt.hash(senha, 10);
+        const hashPassword = await bcrypt.hash(senha, 10);
 
-        console.log('Creating user with data:', { usuario, cpf, hashPassword, cargo }); // Add logging
+        console.log('Creating user with data:', { usuario, email, cpf, hashPassword, cargo });
 
         const response = await FornecedorModel.create({
             nome: usuario,
+            email,
             cpf,
             hashPassword,
             cargo,
         });
 
-        return res.status(200).send({
+        return res.status(201).send({
             type: 'success',
             message: 'Cadastro realizado com sucesso',
             data: response,
         });
     } catch (error) {
-        console.error('Error creating user:', error); // Add logging
+        console.error('Error creating user:', error);
         return res.status(500).send({
             type: 'error',
             message: 'Erro ao realizar cadastro',
@@ -68,16 +69,16 @@ const create = async (req, res) => {
 
 const update = async (id, res, dados = {}) => {
     try {
-        const response = await FornecedorModel.findOne({ where: { id: id } });
+        const response = await FornecedorModel.findOne({ where: { id } });
 
         if (!response) {
-            return res.status(400).send({
+            return res.status(404).send({
                 message: `Nenhum registro com id ${id} para atualizar`,
                 data: [],
             });
         }
 
-        console.log('Updating user with data:', dados); // Add logging
+        console.log('Updating user with data:', dados);
 
         Object.keys(dados).forEach((field) => response[field] = dados[field]);
 
@@ -87,7 +88,7 @@ const update = async (id, res, dados = {}) => {
             data: response,
         });
     } catch (error) {
-        console.error('Error updating user:', error); // Add logging
+        console.error('Error updating user:', error);
         return res.status(500).send({
             message: 'Ops! Ocorreu um erro',
             data: error.message,
@@ -122,11 +123,11 @@ const destroy = async (req, res) => {
             });
         }
 
-        const response = await FornecedorModel.findOne({ where: { id: id } });
+        const response = await FornecedorModel.findOne({ where: { id } });
         console.log(response);
 
         if (!response) {
-            return res.status(400).send({
+            return res.status(404).send({
                 message: `Nenhum registro com id ${id} para deletar`,
                 data: [],
             });
@@ -144,51 +145,64 @@ const destroy = async (req, res) => {
         });
     }
 };
+
 const login = async (req, res) => {
     try {
-        let { nome, senha } = req.body
+        const { nome, senha } = req.body;
 
-        let usuario = await FornecedorModel.findOne({
-            where: { nome },
-        })
+        const usuario = await FornecedorModel.findOne({ where: { nome } });
+
         if (!usuario) {
-            return res.status(200).send({
+            return res.status(400).send({
                 type: "error",
                 message: "Usuario ou senha incorretos",
-            })
+            });
         }
 
-        if (await bcrypt.compare(senha, usuario.hashPassword)) {
+        const isPasswordValid = await bcrypt.compare(senha, usuario.hashPassword);
+        console.log({ senha, hashPassword: usuario.hashPassword, isPasswordValid });
 
-            const token = jwt.sign({ nome: usuario.nome,  id: usuario.id, cargo: usuario.cargo }, process.env.TOKEN_KEY, { expiresIn: '5h' });
+        if (isPasswordValid) {
+            const token = jwt.sign({ nome: usuario.nome, id: usuario.id, cargo: usuario.cargo }, process.env.TOKEN_KEY, { expiresIn: '5h' });
 
             return res.status(200).send({
                 type: "success",
                 message: "Login realizado com sucesso",
                 token,
             });
-
         } else {
-            return res.status(200).send({
+            return res.status(400).send({
                 type: "error",
                 message: "Usuario ou senha incorretos",
-            })
+            });
         }
-
     } catch (error) {
-        return res.status(200).send({
+        return res.status(500).send({
             type: "error",
-            message: "erro",
-            data: error.message
-        })
+            message: "Erro ao realizar login",
+            data: error.message,
+        });
     }
-}
+};
 
+const sendPasswordResetCode = async (req, res) => {
+    return await Email.send(req, res);
+};
 
+const verifyResetCode = async (req, res) => {
+    return await Email.receiveCode(req, res);
+};
+
+const updatePassword = async (req, res) => {
+    return await Email.updatePassword(req, res);
+};
 
 export default {
     get,
     persist,
     destroy,
     login,
+    sendPasswordResetCode,
+    verifyResetCode,
+    updatePassword,
 };

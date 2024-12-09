@@ -22,6 +22,9 @@ const FornecedorModel = sequelize.define(
         },
         cargo: {
             type: DataTypes.TEXT,
+        },
+        email: {
+            type: DataTypes.TEXT,
         }
     },
     {
