@@ -75,6 +75,7 @@ export default function RecuperarSenha() {
           fontSize={"2xl"}
           color="black"
           fontWeight={600}
+          textAlign="center"
         >
           Recuperar Senha
         </Heading>

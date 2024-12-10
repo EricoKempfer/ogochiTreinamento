@@ -7,11 +7,12 @@ import { FaF, FaGoogle } from "react-icons/fa6";
 import { Separator } from "@chakra-ui/react"
 import { SiApple } from "react-icons/si";
 import { Icon } from "@chakra-ui/react"
-import Fimpagina  from "../components/Fimpagina"
+import Fimpagina from "../components/Fimpagina"
 import { FaFacebook } from "react-icons/fa";
 import { useRouter } from 'next/router'
 import { toaster } from "../components/ui/toaster"
 import axios from 'axios';
+import { AspectRatio } from "@chakra-ui/react"
 
 export default function Home() {
   const [visible, setVisible] = useState(false);
@@ -27,7 +28,7 @@ export default function Home() {
       console.log('Login response:', response.data); // Add logging
       if (response.data.type === 'success') {
         await router.push('http://localhost:3000/admin')
-        
+
       } else {
         alert('Usuario ou senha incorretos');
       }
@@ -39,16 +40,16 @@ export default function Home() {
 
   return (
     <div>
-    <HStack
-      w="100%"
-      h="100vh"
-      bgColor={"gray.800"}
-    >
-      <Flex
-        w="220%"
-        h="full"
+      <HStack
+        w="100%"
+        h="100vh"
+        bgColor={"gray.800"}
       >
-        <Box
+        <Flex
+          w="220%"
+          h="full"
+        >
+          <Box
           bgRepeat={"no-repeat"}
           bgPos={"left"}
           bgImage="url(https://images6.alphacoders.com/491/491674.jpg)"
@@ -57,134 +58,136 @@ export default function Home() {
           h="full"
           bgSize="cover"
         />
-      </Flex>
-      <Flex
-        w="full"
-        h="full"
-        alignItems="center"
-        justifyContent="center"
-      >
-        <Stack
+
+        </Flex>
+        <Flex
           w="full"
-          maxW="md"
-          p={4}
+          h="full"
+          alignItems="center"
+          justifyContent="center"
+
         >
-          <Image
-            pb={5}
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Pepsi_logo_%282014%29.svg/800px-Pepsi_logo_%282014%29.svg.png"
-            alt="Pepsi Logo"
-            maxW={"250px"}
-            w={"auto"}
-            h={"auto"}
-            
-          />
-          <Heading
-            fontSize={"2xl"}
-            color="white"
-            fontWeight={600}
-          >
-          Acesse sua conta
-          </Heading>
-          <Text pb={1} color="whiteAlpha.500" fontSize={14}>Digite suas credenciais</Text>
-          <FormControl pb={10} id="usuario" color={"white"}>
-            <FormLabel pb={5}>Usuário</FormLabel>
-            <Input 
-              borderColor="transparent" 
-              bgColor={"black"} 
-              placeholder="Seu usuário" 
-              _placeholder={{ color: "whiteAlpha.700" }} 
-              _focus={{ borderColor: "#004B93" }} 
-              value={usuario}
-              onChange={(e) => setUsuario(e.target.value)}
-            />
-          </FormControl >
-          <FormControl pb={5} id="senha" color={"white"}>
-            <FormLabel pb={5}>Senha</FormLabel>
-            <PasswordInput
-              borderColor="transparent"
-              bgColor={"black"}
-              placeholder="Sua senha"
-              _placeholder={{ color: "whiteAlpha.700" }}
-              _focus={{ borderColor: "#004B93" }}
-              visible={visible}
-              onVisibleChange={setVisible}
-              value={senha}
-              onChange={(e) => setSenha(e.target.value)}
-            />
-            <Text color="whiteAlpha.500" fontSize={13} pl={0.4} pb={0}>Password is {visible ? "visible" : "hidden"}</Text>
-          </FormControl>
           <Stack
-            direction={"row"}
-            align="start"
-            justify={"space-between"}
-            spacing={4}
-            pb={15}
-            pl={0.5}
+            w="full"
+            maxW="md"
+            p={4}
           >
-            <Checkbox colorPalette="blue" size="md" color={"white"}>Lembrar-me</Checkbox>
-            <Link color="#004B93" fontWeight={700} fontSize={14} href="/recuperar-senha">Esqueci minha senha</Link>
-          </Stack>
-          <Button borderRadius={20} bgColor="#004B93" onClick={handleLogin}>Entrar</Button>
-          <HStack pb={2} pt={2}>
-            <Separator borderColor='whiteAlpha.700' />
-            <Text flexShrink="0" color="whiteAlpha.700">OU</Text>
-            <Separator borderColor='whiteAlpha.700' />
-          </HStack>
-          <Button
-            borderRadius={20}
-            bgColor="white"
-            color="black"
-            alignItems="center"
-            justifyContent="center"
-            gap={0} // Adds space between icon and text
-            style={{ marginBottom: '10px' }}
-          >
-            <Icon fontSize="18px" style={{ marginLeft: '10px' }} >
-            <FaGoogle />
-            </Icon>
-            <Text pl={0} style={{ marginLeft: '10px' }}>Entrar com o Google</Text>
-          </Button>
+            <Image
+              pb={5}
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Pepsi_logo_%282014%29.svg/800px-Pepsi_logo_%282014%29.svg.png"
+              alt="Pepsi Logo"
+              maxW={"250px"}
+              w={"auto"}
+              h={"auto"}
 
-          <Button
-            borderRadius={20}
-            bgColor="white"
-            color="black"
-            alignItems="center"
-            justifyContent="center"
-            gap={2} // Adds space between icon and text
-            style={{ marginBottom: '10px' }}
-          >
-            <Icon fontSize="20px">
-            <SiApple />
-            </Icon>
-            <Text>Entrar com a Apple</Text>
-          </Button>
-
-          <Button
-            borderRadius={20}
-            bgColor="white"
-            color="black"
-            alignItems="center"
-            justifyContent="center"
-            gap={1} // Adds space between icon and text
-            style={{ marginBottom: '10px' }}
-          >
-            <Icon fontSize="20px">
-            <FaFacebook />
-            </Icon>
-            <Text >Entrar com o Facebook</Text>
-          </Button>
-          
-          <Flex pt={2} alignItems="center" justifyContent="center">
-            <HStack>
-              <Text color={"whiteAlpha.500"} >Não tem uma conta?</Text>
-              <Link variant="underline" color={"blue.500"} href="/cadastro">Cadastre-se</Link>
+            />
+            <Heading
+              fontSize={"2xl"}
+              color="white"
+              fontWeight={600}
+            >
+              Acesse sua conta
+            </Heading>
+            <Text pb={1} color="whiteAlpha.500" fontSize={14}>Digite suas credenciais</Text>
+            <FormControl pb={10} id="usuario" color={"white"}>
+              <FormLabel pb={5}>Usuário</FormLabel>
+              <Input
+                borderColor="transparent"
+                bgColor={"black"}
+                placeholder="Seu usuário"
+                _placeholder={{ color: "whiteAlpha.700" }}
+                _focus={{ borderColor: "#004B93" }}
+                value={usuario}
+                onChange={(e) => setUsuario(e.target.value)}
+              />
+            </FormControl >
+            <FormControl pb={5} id="senha" color={"white"}>
+              <FormLabel pb={5}>Senha</FormLabel>
+              <PasswordInput
+                borderColor="transparent"
+                bgColor={"black"}
+                placeholder="Sua senha"
+                _placeholder={{ color: "whiteAlpha.700" }}
+                _focus={{ borderColor: "#004B93" }}
+                visible={visible}
+                onVisibleChange={setVisible}
+                value={senha}
+                onChange={(e) => setSenha(e.target.value)}
+              />
+              <Text color="whiteAlpha.500" fontSize={13} pl={0.4} pb={0}>Password is {visible ? "visible" : "hidden"}</Text>
+            </FormControl>
+            <Stack
+              direction={"row"}
+              align="start"
+              justify={"space-between"}
+              spacing={4}
+              pb={15}
+              pl={0.5}
+            >
+              <Checkbox colorPalette="blue" size="md" color={"white"}>Lembrar-me</Checkbox>
+              <Link color="#004B93" fontWeight={700} fontSize={14} href="/recuperar-senha">Esqueci minha senha</Link>
+            </Stack>
+            <Button borderRadius={20} bgColor="#004B93" onClick={handleLogin}>Entrar</Button>
+            <HStack pb={2} pt={2}>
+              <Separator borderColor='whiteAlpha.700' />
+              <Text flexShrink="0" color="whiteAlpha.700">OU</Text>
+              <Separator borderColor='whiteAlpha.700' />
             </HStack>
-          </Flex>
-        </Stack>
-      </Flex>
-      
-    </HStack>
+            <Button
+              borderRadius={20}
+              bgColor="white"
+              color="black"
+              alignItems="center"
+              justifyContent="center"
+              gap={0} // Adds space between icon and text
+              style={{ marginBottom: '10px' }}
+            >
+              <Icon fontSize="18px" style={{ marginLeft: '10px' }} >
+                <FaGoogle />
+              </Icon>
+              <Text pl={0} style={{ marginLeft: '10px' }}>Entrar com o Google</Text>
+            </Button>
+
+            <Button
+              borderRadius={20}
+              bgColor="white"
+              color="black"
+              alignItems="center"
+              justifyContent="center"
+              gap={2} // Adds space between icon and text
+              style={{ marginBottom: '10px' }}
+            >
+              <Icon fontSize="20px">
+                <SiApple />
+              </Icon>
+              <Text>Entrar com a Apple</Text>
+            </Button>
+
+            <Button
+              borderRadius={20}
+              bgColor="white"
+              color="black"
+              alignItems="center"
+              justifyContent="center"
+              gap={1} // Adds space between icon and text
+              style={{ marginBottom: '10px' }}
+            >
+              <Icon fontSize="20px">
+                <FaFacebook />
+              </Icon>
+              <Text >Entrar com o Facebook</Text>
+            </Button>
+
+            <Flex pt={2} alignItems="center" justifyContent="center">
+              <HStack>
+                <Text color={"whiteAlpha.500"} >Não tem uma conta?</Text>
+                <Link variant="underline" color={"blue.500"} href="/cadastro">Cadastre-se</Link>
+              </HStack>
+            </Flex>
+          </Stack>
+        </Flex>
+
+      </HStack>
     </div>
   );
 }
