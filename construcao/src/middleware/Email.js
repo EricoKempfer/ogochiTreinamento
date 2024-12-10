@@ -23,37 +23,25 @@ async function send(req, res) {
     user.recuperation = resetToken;
     await user.save();
 
-    const options = {
-      method: "POST",
-      hostname: "emailapi.netcorecloud.net",
-      port: null,
-      path: "/v5/mail/send",
-      headers: {
-        api_key: "f07afebd4480a49aa9f7a7a40606a3a8",
-        "content-type": "application/json"
+    const smtp = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 465,
+      secure: true, // Change to true
+      auth: {
+        user: "-",
+        pass: "-"
       }
-    };
-
-    const emailReq = http.request(options, (emailRes) => {
-      const chunks = [];
-
-      emailRes.on("data", (chunk) => {
-        chunks.push(chunk);
-      });
-
-      emailRes.on("end", () => {
-        const body = Buffer.concat(chunks);
-        console.log(body.toString());
-      });
     });
 
-    emailReq.write(JSON.stringify({
-      from: { email: 'pepz1nmail@pepisandbox.com', name: 'pepz1nmail' },
-      subject: `Recuperação de senha`,
-      content: [{ type: 'html', value: `Olá ${user.nome}, seu código de recuperação é: ${resetToken}` }],
-      personalizations: [{ to: [{ email, name: user.nome }] }]
-    }));
-    emailReq.end();
+    function sendMail(to, sub, msg) {
+      smtp.sendMail({
+      to: to,
+      subject: sub,
+      html: msg
+      })
+    };
+
+    await sendMail(email, "Recuperação de senha", `Olá ${user.nome}, seu código de recuperação é: ${resetToken}`);
 
     return res.status(200).send({
       type: 'success',

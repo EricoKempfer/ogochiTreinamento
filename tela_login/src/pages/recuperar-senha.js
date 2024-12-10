@@ -21,7 +21,11 @@ export default function RecuperarSenha() {
       }
     } catch (error) {
       console.error('Password reset error:', error);
-      alert('Erro ao enviar código de recuperação');
+      if (error.message.includes('Unexpected socket close')) {
+        alert('Erro de conexão, tente novamente mais tarde');
+      } else {
+        alert('Erro ao enviar código de recuperação');
+      }
     }
   };
 
@@ -36,7 +40,11 @@ export default function RecuperarSenha() {
       }
     } catch (error) {
       console.error('Code verification error:', error);
-      alert('Código de recuperação inválido');
+      if (error.message.includes('Unexpected socket close')) {
+        alert('Erro de conexão, tente novamente mais tarde');
+      } else {
+        alert('Código de recuperação inválido');
+      }
     }
   };
 
@@ -51,7 +59,11 @@ export default function RecuperarSenha() {
       }
     } catch (error) {
       console.error('Password update error:', error);
-      alert('Erro ao atualizar senha');
+      if (error.message.includes('Unexpected socket close')) {
+        alert('Erro de conexão, tente novamente mais tarde');
+      } else {
+        alert('Erro ao atualizar senha');
+      }
     }
   };
 
