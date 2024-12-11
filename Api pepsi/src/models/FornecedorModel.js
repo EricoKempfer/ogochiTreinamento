@@ -29,9 +29,6 @@ const FornecedorModel = sequelize.define(
         recuperation: {
             type: DataTypes.TEXT,
         },
-        newPassword: {
-            type: DataTypes.TEXT,
-        }
     },
     {
         freezeTableName: true,

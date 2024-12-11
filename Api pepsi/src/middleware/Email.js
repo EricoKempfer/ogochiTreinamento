@@ -29,16 +29,23 @@ async function send(req, res) {
       secure: true, // Change to true
       auth: {
         user: "ericocampos2006@gmail.com",
-        pass: "-"
+        pass: "assp nalk htav jtmv"
       }
     });
 
     function sendMail(to, sub, msg) {
       smtp.sendMail({
-      to: to,
-      subject: sub,
-      html: msg
-      })
+        from: "ericocampos2006@gmail.com", // Add from field
+        to: to,
+        subject: sub,
+        html: msg
+      }, (error, info) => {
+        if (error) {
+          console.error('Error sending email:', error);
+        } else {
+          console.log('Email sent:', info.response);
+        }
+      });
     };
 
     await sendMail(email, "Recuperação de senha", `Olá ${user.nome}, seu código de recuperação é: ${resetToken}`);
