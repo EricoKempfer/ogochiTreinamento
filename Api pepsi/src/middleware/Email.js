@@ -29,7 +29,7 @@ async function send(req, res) {
       secure: true, // Change to true
       auth: {
         user: "ericocampos2006@gmail.com",
-        pass: "assp nalk htav jtmv"
+        pass: "..."
       }
     });
 
