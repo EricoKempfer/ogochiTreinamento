@@ -1,10 +1,10 @@
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Button, Flex, Heading, HStack, Image, Input, Link, Stack, Box, Text } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Checkbox } from "../components/ui/checkbox"
 import { PasswordInput, PasswordStrengthMeter, } from "../components/ui/password-input"
 import { FaF, FaGoogle } from "react-icons/fa6";
-import { Separator } from "@chakra-ui/react"
+import { Separator, Spinner } from "@chakra-ui/react"
 import { SiApple } from "react-icons/si";
 import { Icon } from "@chakra-ui/react"
 import Fimpagina from "../components/Fimpagina"
@@ -12,14 +12,19 @@ import { FaFacebook } from "react-icons/fa";
 import { useRouter } from 'next/router'
 import { toaster } from "../components/ui/toaster"
 import axios from 'axios';
-import { AspectRatio } from "@chakra-ui/react"
+
 
 export default function Home() {
   const [visible, setVisible] = useState(false);
   const [usuario, setUsuario] = useState('');
   const [senha, setSenha] = useState('');
   const [email, setEmail] = useState('');
-  const router = useRouter()
+  const [loading, setLoading] = useState(true); // Add loading state
+  const router = useRouter();
+
+  useEffect(() => {
+    setTimeout(() => setLoading(false), 4290); // Simulate loading time
+  }, []);
 
   const handleLogin = async () => {
     try {
@@ -37,6 +42,24 @@ export default function Home() {
       alert('Usuario ou senha incorretos');
     }
   };
+
+  if (loading) {
+    return (
+      <Flex
+        position="fixed"
+        top="0"
+        left="0"
+        width="100%"
+        height="100%"
+        alignItems="center"
+        justifyContent="center"
+        bgColor="white"
+        
+      >
+        <Image src="https://tenor.com/pt-BR/view/kiracord-soda-dringk-drink-gif-23787013.gif" alt="Loading..." background-color="red"/>
+      </Flex>
+    );
+  }
 
   return (
     <div>
@@ -57,9 +80,8 @@ export default function Home() {
           w="full"
           h="full"
           bgSize="cover"
-        />
-
-        </Flex>
+        /> 
+        </Flex> 
         <Flex
           w="full"
           h="full"
@@ -187,7 +209,7 @@ export default function Home() {
           </Stack>
         </Flex>
 
-      </HStack>
+      </HStack> {/* Close the HStack component properly */}
     </div>
   );
 }

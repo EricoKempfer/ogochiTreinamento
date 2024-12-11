@@ -1,7 +1,7 @@
 import FornecedorModel from '../models/FornecedorModel.js';
 import jwt from "jsonwebtoken";
 import * as bcrypt from "bcrypt";
-import Email from '../middleware/Email';
+import Email from '../middleware/Email.js';
 
 const get = async (req, res) => {
     try {

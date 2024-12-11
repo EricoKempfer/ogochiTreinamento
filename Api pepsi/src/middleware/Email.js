@@ -25,10 +25,10 @@ async function send(req, res) {
 
     const smtp = nodemailer.createTransport({
       host: "smtp.gmail.com",
-      port: 465,
+      port: 465, //465
       secure: true, // Change to true
       auth: {
-        user: "-",
+        user: "ericocampos2006@gmail.com",
         pass: "-"
       }
     });
