@@ -17,7 +17,26 @@ const products = ({material=[], handleEditProduct, handleAddProduct, deleta}) =>
   
   const [modalOpen, setModalOpen] = useState(false);
   const [alertVisible, setAlertVisible] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = material.slice(indexOfFirstItem, indexOfLastItem);
+
+  const totalPages = Math.ceil(material.length / itemsPerPage);
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
 
   return (
     <Stack width="full" bgColor={"#d4d4d8"} color={"black"} pl={20} pr={20} borderRadius={"10px"} >
@@ -71,7 +90,7 @@ const products = ({material=[], handleEditProduct, handleAddProduct, deleta}) =>
             </Table.Row>
           </Table.Header >
           <Table.Body>
-            {material.map((item) => (
+            {currentItems.map((item) => (
               <Table.Row key={item.id} bgColor={"transparent"}>
                 <Table.Cell>{item.id}</Table.Cell>
                 <Table.Cell>{item.tipo}</Table.Cell>
@@ -87,6 +106,23 @@ const products = ({material=[], handleEditProduct, handleAddProduct, deleta}) =>
             ))}
           </Table.Body>
         </Table.Root>
+        <Flex justifyContent="space-between" mt={4}>
+          <IconButton
+            onClick={handlePreviousPage}
+            isDisabled={currentPage === 1}
+            aria-label="Previous Page"
+          >
+            Anterior
+          </IconButton>
+          <Text>{`Page ${currentPage} of ${totalPages}`}</Text>
+          <IconButton
+            onClick={handleNextPage}
+            isDisabled={currentPage === totalPages}
+            aria-label="Next Page"
+          >
+            Próxima
+          </IconButton>
+        </Flex>
       </Box>
     </Stack>
   );
