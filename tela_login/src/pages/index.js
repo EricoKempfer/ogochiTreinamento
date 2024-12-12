@@ -12,6 +12,7 @@ import { FaFacebook } from "react-icons/fa";
 import { useRouter } from 'next/router'
 import { toaster } from "../components/ui/toaster"
 import axios from 'axios';
+import jwt from 'jsonwebtoken'; // Add jwt import
 
 
 export default function Home() {
@@ -32,8 +33,13 @@ export default function Home() {
       const response = await axios.post('http://localhost:3335/fornecedor/login', { nome: usuario, senha });
       console.log('Login response:', response.data); // Add logging
       if (response.data.type === 'success') {
-        await router.push('http://localhost:3000/admin')
-
+        localStorage.setItem('token', response.data.token); // Store token
+        const decoded = jwt.decode(response.data.token);
+        if (decoded.cargo === 'admin') {
+          await router.push('/admin'); // Navigate to admin page
+        } else {
+          alert('Você não tem permissão para acessar esta página');
+        }
       } else {
         alert('Usuario ou senha incorretos');
       }

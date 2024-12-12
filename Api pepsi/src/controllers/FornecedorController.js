@@ -52,10 +52,13 @@ const create = async (req, res) => {
             cargo,
         });
 
+        const token = jwt.sign({ nome: response.nome, id: response.id, cargo: response.cargo }, process.env.TOKEN_KEY, { expiresIn: '5h' });
+
         return res.status(201).send({
             type: 'success',
             message: 'Cadastro realizado com sucesso',
             data: response,
+            token, // Add token to the response
         });
     } catch (error) {
         console.error('Error creating user:', error);
