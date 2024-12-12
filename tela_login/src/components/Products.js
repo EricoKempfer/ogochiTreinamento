@@ -2,7 +2,7 @@ import { Box, HStack, Heading, Stack, Table, Flex, Text } from "@chakra-ui/react
 import { IconButton } from "@chakra-ui/react"
 import { LuSearch } from "react-icons/lu"
 import { IoIosAdd } from "react-icons/io";
-import { MdOutlineAdd } from "react-icons/md";
+import { MdBorderColor, MdOutlineAdd } from "react-icons/md";
 import { MdEdit } from "react-icons/md";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { FaSortAmountDown } from "react-icons/fa";
@@ -116,9 +116,10 @@ const products = ({material=[], handleEditProduct, handleAddProduct, deleta}) =>
             isDisabled={currentPage === 1}
             aria-label="Previous Page"
             margin={1}
-            backgroundColor="#004B93"
+            backgroundColor="lightgray"  
+            color="black "
           >
-            Anterior
+            {"<"}
           </IconButton>
           {Array.from({ length: totalPages }, (_, index) => (
             <IconButton
@@ -126,8 +127,11 @@ const products = ({material=[], handleEditProduct, handleAddProduct, deleta}) =>
               onClick={() => handlePageClick(index + 1)}
               isActive={currentPage === index + 1}
               aria-label={`Page ${index + 1}`}
-              backgroundColor="#004B93"
+              backgroundColor={currentPage === index + 1 ? "#004B93" : "#d4d4d8"}
+              color={currentPage === index + 1 ? "white" : "black"}
               margin={1}
+              _focus={{ backgroundColor: "#004B93", color: "white" }}
+              _hover={{ backgroundColor: "gray", color: "white" }}
             >
               {index + 1}
             </IconButton>
@@ -137,9 +141,10 @@ const products = ({material=[], handleEditProduct, handleAddProduct, deleta}) =>
             isDisabled={currentPage === totalPages}
             aria-label="Next Page"
             margin={1}
-            backgroundColor="#004B93"
+            backgroundColor="lightgray"  
+            color="black "
           >
-            Próxima
+            {">"}
           </IconButton>
         </Flex>
       </Box>
