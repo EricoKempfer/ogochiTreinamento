@@ -38,6 +38,10 @@ const products = ({material=[], handleEditProduct, handleAddProduct, deleta}) =>
     }
   };
 
+  const handlePageClick = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
   return (
     <Stack width="full" bgColor={"#d4d4d8"} color={"black"} pl={20} pr={20} borderRadius={"10px"} >
       {alertVisible && (
@@ -92,10 +96,10 @@ const products = ({material=[], handleEditProduct, handleAddProduct, deleta}) =>
           <Table.Body>
             {currentItems.map((item) => (
               <Table.Row key={item.id} bgColor={"transparent"}>
-                <Table.Cell>{item.id}</Table.Cell>
-                <Table.Cell>{item.tipo}</Table.Cell>
-                <Table.Cell>{item.nome}</Table.Cell>
-                <Table.Cell>{item.valor}</Table.Cell>
+                <Table.Cell width={"20%"} >{item.id}</Table.Cell>
+                <Table.Cell width={"20%"}>{item.tipo}</Table.Cell>
+                <Table.Cell width={"20%"}>{item.nome}</Table.Cell>
+                <Table.Cell width={"20%"}>{item.valor}</Table.Cell>
                 <Table.Cell>
                   <Dialog data={item} onSubmit={handleEditProduct} />
                   <IconButton marginLeft={3} borderRadius={6} size="xs" bgColor={"red"} aria-label="Delete product" onClick={() => deleta(item.id, setAlertVisible )}>
@@ -106,19 +110,34 @@ const products = ({material=[], handleEditProduct, handleAddProduct, deleta}) =>
             ))}
           </Table.Body>
         </Table.Root>
-        <Flex justifyContent="space-between" mt={4}>
+        <Flex justifyContent="center" mt={4}>
           <IconButton
             onClick={handlePreviousPage}
             isDisabled={currentPage === 1}
             aria-label="Previous Page"
+            margin={1}
+            backgroundColor="#004B93"
           >
             Anterior
           </IconButton>
-          <Text>{`Page ${currentPage} of ${totalPages}`}</Text>
+          {Array.from({ length: totalPages }, (_, index) => (
+            <IconButton
+              key={index + 1}
+              onClick={() => handlePageClick(index + 1)}
+              isActive={currentPage === index + 1}
+              aria-label={`Page ${index + 1}`}
+              backgroundColor="#004B93"
+              margin={1}
+            >
+              {index + 1}
+            </IconButton>
+          ))}
           <IconButton
             onClick={handleNextPage}
             isDisabled={currentPage === totalPages}
             aria-label="Next Page"
+            margin={1}
+            backgroundColor="#004B93"
           >
             Próxima
           </IconButton>
