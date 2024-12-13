@@ -22,7 +22,9 @@ export default function Home() {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(true); // Add loading state
   const router = useRouter();
+  
 
+  
   useEffect(() => {
     setTimeout(() => setLoading(false), 4290); // Simulate loading time
   }, []);

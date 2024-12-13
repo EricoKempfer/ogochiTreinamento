@@ -20,28 +20,30 @@ import { useRouter } from 'next/router';
 const AdminPage = () => {
   const [material, setMaterial] = useState([]);
   const router = useRouter();
+  
+  const verifyAdmin = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      router.push('/');
+      return;
+    }
 
+    try {
+      const response = await axios.get('http://localhost:3335/fornecedor', {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+
+      if (response.status !== 200) {
+        router.push('/');
+      }
+    } catch (error) {
+      console.error('Error verifying admin:', error);
+      router.push('/');
+    }
+  };
+  
   useEffect(() => {
-    const verifyAdmin = async () => {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        router.push('/');
-        return;
-      }
-
-      try {
-        const response = await axios.get('http://localhost:3335/fornecedor', {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-
-        if (response.status !== 200) {
-          router.push('/');
-        }
-      } catch (error) {
-        console.error('Error verifying admin:', error);
-        router.push('/');
-      }
-    };
+    
 
     verifyAdmin();
     fetchData();
