@@ -12,6 +12,13 @@ import { Link } from "react-router-dom";
 import { Modal } from "./Modal";
 import { Dialog } from "./Dialog";
 import { Alert } from "./ui/alert"
+import { motion } from "framer-motion";
+
+const animations = {
+  initial: { opacity: 0, x: 100 },
+  animate: { opacity: 1, x: 0 },
+  exit: { opacity: 0, x: -100 },
+};
 
 const products = ({material=[], handleEditProduct, handleAddProduct, deleta}) => {
   
@@ -43,6 +50,7 @@ const products = ({material=[], handleEditProduct, handleAddProduct, deleta}) =>
   };
 
   return (
+    
     <Stack width="full" bgColor={"#d4d4d8"} color={"black"} pl={20} pr={20} borderRadius={"10px"} >
       {alertVisible && (
         <Alert
@@ -51,6 +59,13 @@ const products = ({material=[], handleEditProduct, handleAddProduct, deleta}) =>
           onClose={() => setAlertVisible(false)}
         />
       )}
+      <motion.div
+      variants={animations}
+      initial="initial"
+      animate="animate"
+      exit="exit"
+      transition={{ duration: 1 }}
+    >
       <Box
         borderRadius={"10px"}
         backgroundColor={"white"}
@@ -148,6 +163,7 @@ const products = ({material=[], handleEditProduct, handleAddProduct, deleta}) =>
           </IconButton>
         </Flex>
       </Box>
+      </motion.div>
     </Stack>
   );
 }

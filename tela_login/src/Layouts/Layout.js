@@ -44,7 +44,9 @@ const Layout = ({ children }) => {
         </Flex>
         <VStack w="96%" h="full" spacing={4}>
           <Topopagina />
+          <Box w="full" h="full" p={4}>
           {children}
+          </Box>
           <Fim />
         </VStack>
       </HStack>
