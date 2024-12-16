@@ -54,6 +54,7 @@ export default function RecuperarSenha() {
       if (response.data.type === 'success') {
         alert('Senha atualizada com sucesso');
         router.push('/');
+        
       } else {
         alert('Erro ao atualizar senha');
       }
