@@ -41,7 +41,7 @@ const AdminPage = () => {
       router.push('/');
     }
   };
-  
+
   useEffect(() => {
     
 
@@ -75,7 +75,7 @@ const AdminPage = () => {
       }, 3000);
     }
   }
-
+  
   const handleEditProduct = async (id, updatedProduct) => {
     try {
       const response = await axios.patch(`http://localhost:3335/material/${id}`, updatedProduct);

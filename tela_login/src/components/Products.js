@@ -13,6 +13,8 @@ import { Modal } from "./Modal";
 import { Dialog } from "./Dialog";
 import { Alert } from "./ui/alert"
 import { motion } from "framer-motion";
+import { useRouter } from 'next/router';
+
 
 const animations = {
   initial: { opacity: 0, x: 100 },
@@ -22,6 +24,29 @@ const animations = {
 
 const products = ({material=[], handleEditProduct, handleAddProduct, deleta}) => {
   
+  
+  const router = useRouter();
+  const verifyAdmin = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+
+      router.push('/');
+      return;
+    }
+
+    try {
+      const response = await axios.get('http://localhost:3335/fornecedor', {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+
+      if (response.status !== 200) {
+        router.push('/');
+      }
+    } catch (error) {
+      console.error('Error verifying admin:', error);
+      router.push('/');
+    }
+  };
   const [modalOpen, setModalOpen] = useState(false);
   const [alertVisible, setAlertVisible] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -32,7 +57,10 @@ const products = ({material=[], handleEditProduct, handleAddProduct, deleta}) =>
   const currentItems = material.slice(indexOfFirstItem, indexOfLastItem);
 
   const totalPages = Math.ceil(material.length / itemsPerPage);
+  useEffect(() => {
+    verifyAdmin();
 
+  }, []);
   const handleNextPage = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);

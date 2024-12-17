@@ -1,4 +1,4 @@
-import { Box, HStack, Flex, VStack, Icon } from "@chakra-ui/react";
+import { Box, HStack, Flex, VStack, Icon, Button } from "@chakra-ui/react";
 import Fim from "../components/Fimpagina";
 import Topopagina from "../components/Topopagina";
 import { TbBrandPepsi } from "react-icons/tb";
@@ -7,8 +7,16 @@ import { CgProfile } from "react-icons/cg";
 import { MdOutlineAttachMoney } from "react-icons/md";
 import { BsQuestionCircle } from "react-icons/bs";
 import { FaGear } from "react-icons/fa6";
+import { useRouter } from 'next/router';
 
 const Layout = ({ children }) => {
+  const router = useRouter();
+  const handleLogout = async () => {
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('token');
+      router.push('/');
+    }
+  };
   return (
     <div className="content">
       <HStack w="100%" h="100vh">
@@ -19,9 +27,11 @@ const Layout = ({ children }) => {
           justify="space-between" // Push icons to the top and bottom
         >
           <Box bgColor="white" w="full" h="100vh">
-            <Icon w={12} h={12} color={"#004B93"} marginLeft={3.5} marginTop={2}>
+            <Button p={0} bgColor={"transparent"} onClick={handleLogout} >
+            <Icon w={12} h={12} color={"#004B93"} marginLeft={3.5} marginTop={2} >
               <TbBrandPepsi />
             </Icon>
+            </Button>
             <Icon w={10} h={10} color={"gray"} marginLeft={4.5} marginTop={10}>
               <AiOutlineProduct />
             </Icon>
