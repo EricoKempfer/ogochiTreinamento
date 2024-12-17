@@ -19,6 +19,7 @@ import { useRouter } from 'next/router';
 
 const AdminPage = () => {
   const [material, setMaterial] = useState([]);
+  const [autorizado, setAutorizado] = useState(false);
   const router = useRouter();
   
   const verifyAdmin = async () => {
@@ -36,6 +37,7 @@ const AdminPage = () => {
       if (response.status !== 200) {
         router.push('/');
       }
+      setAutorizado(true);
     } catch (error) {
       console.error('Error verifying admin:', error);
       router.push('/');
@@ -97,11 +99,20 @@ const AdminPage = () => {
     }
   };
 
+  if (!autorizado) {
+    return (
+      <Layout>
+        <Box>
+          <Text>Carregando...</Text>
+        </Box>
+      </Layout>
+    );
+  } else {
   return (
     <Layout>
       <Products material={material} deleta={deleta} handleEditProduct={handleEditProduct} handleAddProduct={handleAddProduct} />
     </Layout>
   );
 };
-
+};
 export default AdminPage;
