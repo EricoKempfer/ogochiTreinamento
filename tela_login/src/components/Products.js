@@ -14,7 +14,8 @@ import { Dialog } from "./Dialog";
 import { Alert } from "./ui/alert"
 import { motion } from "framer-motion";
 import { useRouter } from 'next/router';
-
+import { IoMdDownload } from "react-icons/io";
+import { saveAs } from 'file-saver';
 
 const animations = {
   initial: { opacity: 0, x: 100 },
@@ -75,6 +76,18 @@ const products = ({material=[], handleEditProduct, handleAddProduct, deleta}) =>
 
   const handlePageClick = (pageNumber) => {
     setCurrentPage(pageNumber);
+  };
+
+  const handleDownload = async (fileId) => {
+    try {
+      const response = await axios.get(`http://localhost:3335/download/${fileId}`, {
+        responseType: 'blob',
+      });
+      const fileName = response.headers['content-disposition'].split('filename=')[1];
+      saveAs(response.data, fileName);
+    } catch (error) {
+      console.error('Error downloading file:', error);
+    }
   };
 
   return (
@@ -147,6 +160,9 @@ const products = ({material=[], handleEditProduct, handleAddProduct, deleta}) =>
                   <Dialog data={item} onSubmit={handleEditProduct} />
                   <IconButton marginLeft={3} borderRadius={6} size="xs" bgColor={"red"} aria-label="Delete product" onClick={() => deleta(item.id, setAlertVisible )}>
                     <FaRegTrashAlt />
+                  </IconButton>
+                  <IconButton  marginLeft={3} borderRadius={6} size="xs" bgColor={"gray.700"} aria-label="Download" onClick={() => handleDownload(item.id)}>
+                    <IoMdDownload />
                   </IconButton>
                 </Table.Cell>
               </Table.Row>
