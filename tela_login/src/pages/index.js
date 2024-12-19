@@ -77,18 +77,10 @@ export default function Home() {
         bgColor={"gray.800"}
       >
         <Flex
-          w="220%"
+          w="180%"
           h="full"
         >
-          <Box
-          bgRepeat={"no-repeat"}
-          bgPos={"left"}
-          bgImage="url(https://images6.alphacoders.com/491/491674.jpg)"
-          p={5}
-          w="full"
-          h="full"
-          bgSize="cover"
-        /> 
+          <Image w={"full"} src="https://tenor.com/pt-BR/view/pepsi-pepsico-new-logo-soft-drink-cola-gif-1961380920692497371.gif" alt="Loading..." background-color="red"/>
         </Flex> 
         <Flex
           w="full"

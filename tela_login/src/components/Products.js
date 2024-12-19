@@ -78,16 +78,10 @@ const products = ({material=[], handleEditProduct, handleAddProduct, deleta}) =>
     setCurrentPage(pageNumber);
   };
 
-  const handleDownload = async (fileId) => {
-    try {
-      const response = await axios.get(`http://localhost:3335/download/${fileId}`, {
-        responseType: 'blob',
-      });
-      const fileName = response.headers['content-disposition'].split('filename=')[1];
-      saveAs(response.data, fileName);
-    } catch (error) {
-      console.error('Error downloading file:', error);
-    }
+  const handleDownload = (fileId) => {
+    const fileContent = `File ID: ${fileId}`;
+    const blob = new Blob([fileContent], { type: 'text/plain;charset=utf-8' });
+    saveAs(blob, `file_${fileId}.txt`);
   };
 
   return (
