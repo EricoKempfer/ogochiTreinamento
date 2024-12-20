@@ -11,4 +11,5 @@ export default (app) => {
   app.post('/fornecedor/reset-password', controller.sendPasswordResetCode);
   app.post('/fornecedor/verify-reset-code', controller.verifyResetCode);
   app.post('/fornecedor/update-password', controller.updatePassword);
+  app.post('/predict/predict', controller.uploadfile);
 };

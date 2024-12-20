@@ -149,7 +149,7 @@ const products = ({material=[], handleEditProduct, handleAddProduct, deleta}) =>
                 <Table.Cell width={"20%"} >{item.id}</Table.Cell>
                 <Table.Cell width={"20%"}>{item.tipo}</Table.Cell>
                 <Table.Cell width={"20%"}>{item.nome}</Table.Cell>
-                <Table.Cell width={"20%"}>{item.valor}</Table.Cell>
+                <Table.Cell width={"20%"}>R$ {item.valor}.00</Table.Cell>
                 <Table.Cell>
                   <Dialog data={item} onSubmit={handleEditProduct} />
                   <IconButton marginLeft={3} borderRadius={6} size="xs" bgColor={"red"} aria-label="Delete product" onClick={() => deleta(item.id, setAlertVisible )}>

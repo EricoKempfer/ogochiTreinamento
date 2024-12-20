@@ -2,6 +2,8 @@ import FornecedorModel from '../models/FornecedorModel.js';
 import jwt from "jsonwebtoken";
 import * as bcrypt from "bcrypt";
 import Email from '../middleware/Email.js';
+import uploadFile from '../middleware/uploadFile.js';
+  
 
 const get = async (req, res) => {
     try {
@@ -200,6 +202,40 @@ const updatePassword = async (req, res) => {
     return await Email.updatePassword(req, res);
 };
 
+const uploadfile = async (req, res) => {
+    try {
+        const { file } = req.files;
+
+        console.log('Received file:', file);
+
+        const result = await uploadFile(file, {
+            tipo: file.mimetype,
+            tabela: 'some_table',
+            id: file.name,
+        });
+
+        if (result.type === 'success') {
+            return res.status(200).send({
+                type: 'success',
+                message: 'File uploaded successfully!',
+                data: result,
+            });
+        } else {
+            return res.status(500).send({
+                type: 'error',
+                message: result.message || 'Error uploading file.',
+            });
+        }
+    } catch (error) {
+        console.error('Error during file upload:', error);
+        return res.status(500).send({
+            type: 'error',
+            message: 'Oops! Something went wrong during the file upload.',
+            data: error.message,
+        });
+    }
+};
+
 export default {
     get,
     persist,
@@ -208,4 +244,5 @@ export default {
     sendPasswordResetCode,
     verifyResetCode,
     updatePassword,
+    uploadfile,
 };

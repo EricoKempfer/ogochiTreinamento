@@ -1,8 +1,9 @@
 import 'dotenv/config'
 import Express from 'express'
 import routes from './routes';
-import cors from 'cors';
-const fileUpload = require("express-fileupload");
+import cors from 'cors';  
+const fileUpload = require('express-fileupload');
+
 const app = Express();
 
 const corsOptions = {
@@ -14,9 +15,12 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-app.use(Express.json());
+app.use(Express.json({ limit: '50mb' }));
+app.use(Express.urlencoded({ extended: true, limit: '50mb' }));
+app.use(fileUpload({ createParentPath: true }));
 
 routes(app);
+
 app.use((req, res) => {
   return res.status(404).send('<h1>FFFF TOTAL</h1>')
 })
