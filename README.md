@@ -1,5 +1,5 @@
 # **Códigos treino estágio**
-## 📝 **Descrição dos Projetos**
+## **Descrição dos Projetos**
 
 ## Tela Login
 Site Pepsi - Next js, Chakra UI, Axios, Node js
